@@ -1,0 +1,2 @@
+# pokemory
+bro faaz sol
