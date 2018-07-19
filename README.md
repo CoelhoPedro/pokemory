@@ -1,2 +1,1 @@
 # pokemory
-bro faaz sol
