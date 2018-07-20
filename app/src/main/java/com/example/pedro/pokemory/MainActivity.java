@@ -8,30 +8,30 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    public Button novoJogo, ranking;
+    public Button buttonNewGame, buttonRanking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        novoJogo = findViewById(R.id.novoJogo);
-        ranking = findViewById(R.id.ranking);
+        buttonNewGame = findViewById(R.id.buttonNewGame);
+        buttonRanking = findViewById(R.id.buttonRanking);
 
-        novoJogo.setOnClickListener(new View.OnClickListener() {
+        buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(view.getContext(), JogoActivity.class);
+                Intent intent = new Intent(MainActivity.this, JogoActivity.class);
                 startActivity(intent);
             }
         });
 
-        ranking.setOnClickListener(new View.OnClickListener() {
+        buttonRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(view.getContext(), RankingActivity.class);
+                Intent intent = new Intent(MainActivity.this, RankingActivity.class);
                 startActivity(intent);
             }
         });
