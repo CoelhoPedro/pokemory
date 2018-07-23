@@ -1,10 +1,13 @@
-package com.example.pedro.pokemory;
+package com.example.pedro.pokemory.Adapter;
 
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.pedro.pokemory.R;
+import com.example.pedro.pokemory.RankItem;
 
 import java.util.List;
 
