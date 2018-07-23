@@ -1,5 +1,7 @@
 package com.example.pedro.pokemory;
 
+import android.app.Activity;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,16 +9,19 @@ import android.widget.ImageView;
 
 import java.util.Random;
 
-public class JogoActivity extends AppCompatActivity {
+public class JogoActivity extends Activity {
 
     public ImageView button1,button2,button3,button4,button5,button6,button7,button8,
             button9,button10,button11,button12;
     public int[][] matriz;
+    public MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogo);
+
+        verificaSom();
 
         button1 = findViewById(R.id.ImageView1Id);
         button2 = findViewById(R.id.ImageView2Id);
@@ -228,6 +233,40 @@ public class JogoActivity extends AppCompatActivity {
                 button.setImageDrawable(getResources().getDrawable(R.drawable.meowth));
                 break;
         }
+    }
+
+    public void verificaSom(){
+
+        Bundle extra = getIntent().getExtras();
+        String textoPassado = extra.getString("som");
+
+        if(extra != null){
+
+            if(textoPassado.equals("ativado")){
+                tocarMusica();
+            }
+
+        }
+
+    }
+
+    public void tocarMusica(){
+
+        mediaPlayer = MediaPlayer.create(JogoActivity.this, R.raw.pokemontheme);
+        mediaPlayer.start();
+        mediaPlayer.setLooping(true);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        if(mediaPlayer != null){
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+        super.onDestroy();
     }
 }
 

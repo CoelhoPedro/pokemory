@@ -8,7 +8,8 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    public Button buttonNewGame, buttonRanking;
+    public boolean isOn = true;
+    public Button buttonNewGame, buttonRanking, buttonSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +18,20 @@ public class MainActivity extends AppCompatActivity {
 
         buttonNewGame = findViewById(R.id.buttonNewGame);
         buttonRanking = findViewById(R.id.buttonRanking);
+        buttonSound = findViewById(R.id.buttonSound);
 
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, JogoActivity.class);
+
+                if(isOn){
+                    intent.putExtra("som", "ativado");
+                } else{
+                    intent.putExtra("som", "desativado");
+                }
+
                 startActivity(intent);
             }
         });
@@ -33,6 +42,25 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, RankingActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        buttonSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(isOn){
+
+                    isOn = false;
+                    buttonSound.setText("Ativar Som");
+
+                } else{
+
+                    isOn = true;
+                    buttonSound.setText("Desativar Som");
+
+                }
+
             }
         });
 
