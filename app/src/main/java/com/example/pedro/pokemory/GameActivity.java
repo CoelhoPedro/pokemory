@@ -446,9 +446,9 @@ public class GameActivity extends Activity {
 
     public void checkSound(){
         Bundle extra = getIntent().getExtras();
-        String textoPassado = extra.getString("som");
+        String text = extra.getString("som");
         if(extra != null){
-            if(textoPassado.equals("ativado")) {
+            if(text.equals("ativado")) {
                 playMusic();
             }
         }
@@ -474,23 +474,24 @@ public class GameActivity extends Activity {
     }
 
     @Override
-    protected void onResume() {
+    protected void onStop() {
 
-        if (!mediaPlayer.isPlaying()){
-            mediaPlayer.start();
-        }
-
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-
-        if (mediaPlayer.isPlaying()){
+        if (mediaPlayer !=  null && mediaPlayer.isPlaying()){
             mediaPlayer.pause();
         }
 
-        super.onPause();
+        super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()){
+            mediaPlayer.start();
+        }
+
+        super.onRestart();
+
     }
 }
 
