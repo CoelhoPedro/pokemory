@@ -457,6 +457,7 @@ public class JogoActivity extends Activity {
     }
 
     public void tocarMusica(){
+
         mediaPlayer = MediaPlayer.create(JogoActivity.this, R.raw.pokemontheme);
         mediaPlayer.start();
         mediaPlayer.setLooping(true);
@@ -465,10 +466,12 @@ public class JogoActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        if (mediaPlayer != null){
+
+        if(mediaPlayer != null){
             mediaPlayer.release();
             mediaPlayer = null;
         }
+
         super.onDestroy();
     }
 }
