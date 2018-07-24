@@ -3,16 +3,14 @@ package com.example.pedro.pokemory;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 
-public class JogoActivity extends Activity {
+public class GameActivity extends Activity {
 
     private TextView textViewScore;
     public MediaPlayer mediaPlayer;
@@ -28,7 +26,7 @@ public class JogoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jogo);
+        setContentView(R.layout.activity_game);
 
         verificaSom();
 
@@ -458,7 +456,7 @@ public class JogoActivity extends Activity {
 
     public void tocarMusica(){
 
-        mediaPlayer = MediaPlayer.create(JogoActivity.this, R.raw.pokemontheme);
+        mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.pokemontheme);
         mediaPlayer.start();
         mediaPlayer.setLooping(true);
 
