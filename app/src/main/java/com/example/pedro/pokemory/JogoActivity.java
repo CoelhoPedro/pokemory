@@ -474,6 +474,26 @@ public class JogoActivity extends Activity {
 
         super.onDestroy();
     }
+
+    @Override
+    protected void onResume() {
+
+        if (!mediaPlayer.isPlaying()){
+            mediaPlayer.start();
+        }
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+
+        if (mediaPlayer.isPlaying()){
+            mediaPlayer.pause();
+        }
+
+        super.onPause();
+    }
 }
 
 
