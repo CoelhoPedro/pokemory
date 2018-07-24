@@ -28,7 +28,7 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        verificaSom();
+        checkSound();
 
         setViews();
         String scoreText = getString(R.string.score) + ": " + Integer.toString(playerScore);
@@ -444,17 +444,17 @@ public class GameActivity extends Activity {
         button12 = findViewById(R.id.ImageView12Id);
     }
 
-    public void verificaSom(){
+    public void checkSound(){
         Bundle extra = getIntent().getExtras();
         String textoPassado = extra.getString("som");
         if(extra != null){
             if(textoPassado.equals("ativado")) {
-                tocarMusica();
+                playMusic();
             }
         }
     }
 
-    public void tocarMusica(){
+    public void playMusic(){
 
         mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.pokemontheme);
         mediaPlayer.start();
