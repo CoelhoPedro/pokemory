@@ -12,15 +12,15 @@ import java.util.Random;
 
 public class GameActivity extends Activity {
 
-    private TextView textViewScore;
+    private TextView textViewScore, textViewTries;
     public MediaPlayer mediaPlayer;
     public ImageView button1,button2,button3,button4,button5,button6,button7,button8,
             button9,button10,button11,button12, lastButtonClicked;
     public int[][] matriz;
     private boolean boolean1, boolean2, boolean3, boolean4, boolean5, boolean6, boolean7, boolean8,
             boolean9, boolean10, boolean11, boolean12, flipped = false;
-    private int valueFlippedImage, playerScore = 0, cardsFlipped = 0;
-    private final static int DELAY_TIME = 1500;
+    private int valueFlippedImage, playerScore = 0,playerTries = 0, cardsFlipped = 0;
+    private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
 
     @Override
@@ -31,8 +31,11 @@ public class GameActivity extends Activity {
         checkSound();
 
         setViews();
+
         String scoreText = getString(R.string.score) + ": " + Integer.toString(playerScore);
         textViewScore.setText(scoreText);
+        String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
+        textViewTries.setText(triesText);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,9 +347,14 @@ public class GameActivity extends Activity {
 
     private boolean compareCards(int imageValue, final ImageView image){
 
+        playerTries++;
+        String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
+        textViewTries.setText(triesText);
+
         if (imageValue == valueFlippedImage){
             cardsFlipped = 2;
             playerScore++;
+            playSoundCorrect();
             flipped = false;
             setDrawables(imageValue, image);
             new Handler().postDelayed(new Runnable() {
@@ -365,6 +373,7 @@ public class GameActivity extends Activity {
         }
         else {
             flipped = false;
+            playSoundFailed();
             setDrawables(imageValue, image);
             cardsFlipped = 2;
             switch (lastBooleanClicked){
@@ -430,6 +439,7 @@ public class GameActivity extends Activity {
 
     private void setViews(){
         textViewScore = findViewById(R.id.textViewScore);
+        textViewTries = findViewById(R.id.textViewTries);
         button1 = findViewById(R.id.ImageView1Id);
         button2 = findViewById(R.id.ImageView2Id);
         button3 = findViewById(R.id.ImageView3Id);
@@ -459,6 +469,18 @@ public class GameActivity extends Activity {
         mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.pokemontheme);
         mediaPlayer.start();
         mediaPlayer.setLooping(true);
+
+    }
+
+    public void playSoundCorrect(){
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.correctsound);
+        mediaPlayer.start();
+
+    }
+
+    public void playSoundFailed(){
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.failedsound);
+        mediaPlayer.start();
 
     }
 
