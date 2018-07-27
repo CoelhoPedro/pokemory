@@ -1,12 +1,19 @@
 package com.example.pedro.pokemory;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -19,18 +26,25 @@ public class GameActivity extends Activity {
     public int[][] matriz;
     private boolean boolean1, boolean2, boolean3, boolean4, boolean5, boolean6, boolean7, boolean8,
             boolean9, boolean10, boolean11, boolean12, flipped = false;
-    private int valueFlippedImage, playerScore = 0,playerTries = 0, cardsFlipped = 0;
+    private int valueFlippedImage, playerScore = 0,playerTries = 0, cardsFlipped = 0, cardsUp=1;
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
+    private Button buttonMenu, buttonNewGame;
+    Dialog DialogEndGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        DialogEndGame = new Dialog(this);
+
         checkSound();
 
         setViews();
+
+
+
 
         String scoreText = getString(R.string.score) + ": " + Integer.toString(playerScore);
         textViewScore.setText(scoreText);
@@ -352,6 +366,7 @@ public class GameActivity extends Activity {
         textViewTries.setText(triesText);
 
         if (imageValue == valueFlippedImage){
+            cardsUp--;
             cardsFlipped = 2;
             playerScore++;
             playSoundCorrect();
@@ -368,6 +383,10 @@ public class GameActivity extends Activity {
                     cardsFlipped = 0;
                 }
             }, DELAY_TIME);
+
+            if(cardsUp==0){
+                ShowEndGamePopUp();
+            }
 
             return true;
         }
@@ -514,6 +533,36 @@ public class GameActivity extends Activity {
 
         super.onRestart();
 
+    }
+
+    public void ShowEndGamePopUp(){
+
+        TextView textViewPointsEndGame;
+
+        DialogEndGame.setContentView(R.layout.end_game_popup);
+        buttonMenu = DialogEndGame.findViewById(R.id.ButtonBackId);
+        buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
+        textViewPointsEndGame = findViewById(R.id.textViewPoints);
+
+        DialogEndGame.setCanceledOnTouchOutside(false);
+
+        textViewPointsEndGame.setText(Integer.toString(playerScore)); // ESTA DANDO ERRO AQUI
+
+        DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        DialogEndGame.show();
+        buttonMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }
 
