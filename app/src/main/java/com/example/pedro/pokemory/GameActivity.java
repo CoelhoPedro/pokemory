@@ -43,9 +43,6 @@ public class GameActivity extends Activity {
 
         setViews();
 
-
-
-
         String scoreText = getString(R.string.score) + ": " + Integer.toString(playerScore);
         textViewScore.setText(scoreText);
         String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
@@ -542,7 +539,7 @@ public class GameActivity extends Activity {
         DialogEndGame.setContentView(R.layout.end_game_popup);
         buttonMenu = DialogEndGame.findViewById(R.id.ButtonBackId);
         buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
-        textViewPointsEndGame = findViewById(R.id.textViewPoints);
+        textViewPointsEndGame = DialogEndGame.findViewById(R.id.textViewPoints);
 
         DialogEndGame.setCanceledOnTouchOutside(false);
 
