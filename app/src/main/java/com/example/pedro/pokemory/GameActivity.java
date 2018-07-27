@@ -3,6 +3,7 @@ package com.example.pedro.pokemory;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -26,7 +27,7 @@ public class GameActivity extends Activity {
     public int[][] matriz;
     private boolean boolean1, boolean2, boolean3, boolean4, boolean5, boolean6, boolean7, boolean8,
             boolean9, boolean10, boolean11, boolean12, flipped = false;
-    private int valueFlippedImage, playerScore = 0,playerTries = 0, cardsFlipped = 0, cardsUp=1;
+    private int valueFlippedImage, playerScore = 0,playerTries = 0, cardsFlipped = 0, cardsUp=6;
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
     private Button buttonMenu, buttonNewGame;
@@ -36,6 +37,8 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         DialogEndGame = new Dialog(this);
 
