@@ -1,8 +1,7 @@
-package com.example.pedro.pokemory;
+package com.example.pedro.pokemory.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,7 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.pedro.pokemory.R;
 
 import java.util.Random;
 

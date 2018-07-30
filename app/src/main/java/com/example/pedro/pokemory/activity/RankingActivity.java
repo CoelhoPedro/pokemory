@@ -1,10 +1,12 @@
-package com.example.pedro.pokemory;
+package com.example.pedro.pokemory.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
 import com.example.pedro.pokemory.Adapter.RankAdapter;
+import com.example.pedro.pokemory.R;
+import com.example.pedro.pokemory.model.RankItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;

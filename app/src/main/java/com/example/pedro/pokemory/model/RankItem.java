@@ -1,4 +1,4 @@
-package com.example.pedro.pokemory;
+package com.example.pedro.pokemory.model;
 
 /**
  * Created by user on 19/07/2018.
