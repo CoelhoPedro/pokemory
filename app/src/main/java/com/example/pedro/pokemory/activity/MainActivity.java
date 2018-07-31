@@ -1,4 +1,4 @@
-package com.example.pedro.pokemory;
+package com.example.pedro.pokemory.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.example.pedro.pokemory.R;
 
 public class MainActivity extends AppCompatActivity {
 

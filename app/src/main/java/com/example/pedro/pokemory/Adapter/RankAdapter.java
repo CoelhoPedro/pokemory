@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.pedro.pokemory.R;
-import com.example.pedro.pokemory.RankItem;
+import com.example.pedro.pokemory.model.RankItem;
 
 import java.util.List;
 
