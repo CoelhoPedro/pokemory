@@ -2,19 +2,17 @@ package com.example.pedro.pokemory;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -22,16 +20,17 @@ public class GameActivity extends Activity {
 
     private TextView textViewScore, textViewTries;
     public MediaPlayer mediaPlayer;
-    public ImageView button1,button2,button3,button4,button5,button6,button7,button8,
-            button9,button10,button11,button12, lastButtonClicked;
+    public ImageView ImageView_1, imageView_2, imageView_3, imageView_4, imageView_5, imageView_6,
+            imageView_7, imageView_8, imageView_9, imageView_10, imageView_11, imageView_12,
+            lastImageViewClicked;
     public int[][] matriz;
     private boolean boolean1, boolean2, boolean3, boolean4, boolean5, boolean6, boolean7, boolean8,
             boolean9, boolean10, boolean11, boolean12, flipped = false;
-    private int valueFlippedImage, playerScore = 0,playerTries = 0, cardsFlipped = 0, cardsUp=6;
+    private int imageValueFlipped, playerScore = 0, playerTries = 0, cardsFlipped = 0, cardsUp = 6;
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
-    private Button buttonMenu, buttonNewGame;
     Dialog DialogEndGame;
+    long startTime = System.currentTimeMillis();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,7 @@ public class GameActivity extends Activity {
 
         DialogEndGame = new Dialog(this);
 
-        checkSound();
+        checkSoundStatus("inGame");
 
         setViews();
 
@@ -51,210 +50,199 @@ public class GameActivity extends Activity {
         String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
         textViewTries.setText(triesText);
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        ImageView_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean1) {
                         if (!flipped) {
                             int imageValue = matriz[0][0];
-                            boolean1 = isNotFlipped(imageValue, button1, "boolean1");
+                            boolean1 = flipTheCard(imageValue, ImageView_1, "boolean1");
                         } else {
                             int imageValue = matriz[0][0];
-                            boolean1 = compareCards(imageValue, button1);
+                            boolean1 = compareCards(imageValue, ImageView_1);
                         }
                     }
                 }
             }
         });
 
-        button2.setOnClickListener(new View.OnClickListener() {
+        imageView_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean2) {
                         if (!flipped) {
                             int imageValue = matriz[0][1];
-                            boolean2 = isNotFlipped(imageValue, button2, "boolean2");
+                            boolean2 = flipTheCard(imageValue, imageView_2, "boolean2");
                         } else {
                             int imageValue = matriz[0][1];
-                            boolean2 = compareCards(imageValue, button2);
+                            boolean2 = compareCards(imageValue, imageView_2);
                         }
                     }
                 }
-
             }
         });
 
-        button3.setOnClickListener(new View.OnClickListener() {
+        imageView_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean3) {
                         if (!flipped) {
                             int imageValue = matriz[0][2];
-                            boolean3 = isNotFlipped(imageValue, button3, "boolean3");
+                            boolean3 = flipTheCard(imageValue, imageView_3, "boolean3");
                         } else {
                             int imageValue = matriz[0][2];
-                            boolean3 = compareCards(imageValue, button3);
+                            boolean3 = compareCards(imageValue, imageView_3);
                         }
                     }
                 }
-
             }
         });
-        button4.setOnClickListener(new View.OnClickListener() {
+        imageView_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean4) {
                         if (!flipped) {
                             int imageValue = matriz[1][0];
-                            boolean4 = isNotFlipped(imageValue, button4, "boolean4");
+                            boolean4 = flipTheCard(imageValue, imageView_4, "boolean4");
                         } else {
                             int imageValue = matriz[1][0];
-                            boolean4 = compareCards(imageValue, button4);
+                            boolean4 = compareCards(imageValue, imageView_4);
                         }
                     }
                 }
-
             }
         });
-        button5.setOnClickListener(new View.OnClickListener() {
+        imageView_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean5) {
                         if (!flipped) {
                             int imageValue = matriz[1][1];
-                            boolean5 = isNotFlipped(imageValue, button5, "boolean5");
+                            boolean5 = flipTheCard(imageValue, imageView_5, "boolean5");
                         } else {
                             int imageValue = matriz[1][1];
-                            boolean5 = compareCards(imageValue, button5);
+                            boolean5 = compareCards(imageValue, imageView_5);
                         }
                     }
                 }
-
             }
         });
-        button6.setOnClickListener(new View.OnClickListener() {
+        imageView_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean6) {
                         if (!flipped) {
                             int imageValue = matriz[1][2];
-                            boolean6 = isNotFlipped(imageValue, button6, "boolean6");
+                            boolean6 = flipTheCard(imageValue, imageView_6, "boolean6");
                         } else {
                             int imageValue = matriz[1][2];
-                            boolean6 = compareCards(imageValue, button6);
+                            boolean6 = compareCards(imageValue, imageView_6);
                         }
                     }
                 }
-
             }
         });
-        button7.setOnClickListener(new View.OnClickListener() {
+        imageView_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean7) {
                         if (!flipped) {
                             int imageValue = matriz[2][0];
-                            boolean7 = isNotFlipped(imageValue, button7, "boolean7");
+                            boolean7 = flipTheCard(imageValue, imageView_7, "boolean7");
                         } else {
                             int imageValue = matriz[2][0];
-                            boolean7 = compareCards(imageValue, button7);
+                            boolean7 = compareCards(imageValue, imageView_7);
                         }
 
                     }
                 }
-
             }
         });
-        button8.setOnClickListener(new View.OnClickListener() {
+        imageView_8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean8) {
                         if (!flipped) {
                             int imageValue = matriz[2][1];
-                            boolean8 = isNotFlipped(imageValue, button8, "boolean8");
+                            boolean8 = flipTheCard(imageValue, imageView_8, "boolean8");
                         } else {
                             int imageValue = matriz[2][1];
-                            boolean8 = compareCards(imageValue, button8);
+                            boolean8 = compareCards(imageValue, imageView_8);
                         }
                     }
                 }
-
             }
         });
-        button9.setOnClickListener(new View.OnClickListener() {
+        imageView_9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean9) {
                         if (!flipped) {
                             int imageValue = matriz[2][2];
-                            boolean9 = isNotFlipped(imageValue, button9, "boolean9");
+                            boolean9 = flipTheCard(imageValue, imageView_9, "boolean9");
                         } else {
                             int imageValue = matriz[2][2];
-                            boolean9 = compareCards(imageValue, button9);
+                            boolean9 = compareCards(imageValue, imageView_9);
                         }
                     }
                 }
-
             }
         });
-        button10.setOnClickListener(new View.OnClickListener() {
+        imageView_10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean10) {
                         if (!flipped) {
                             int imageValue = matriz[3][0];
-                            boolean10 = isNotFlipped(imageValue, button10, "boolean10");
+                            boolean10 = flipTheCard(imageValue, imageView_10, "boolean10");
                         } else {
                             int imageValue = matriz[3][0];
-                            boolean10 = compareCards(imageValue, button10);
+                            boolean10 = compareCards(imageValue, imageView_10);
                         }
                     }
                 }
-
             }
         });
-        button11.setOnClickListener(new View.OnClickListener() {
+        imageView_11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean11) {
                         if (!flipped) {
                             int imageValue = matriz[3][1];
-                            boolean11 = isNotFlipped(imageValue, button11, "boolean11");
+                            boolean11 = flipTheCard(imageValue, imageView_11, "boolean11");
                         } else {
                             int imageValue = matriz[3][1];
-                            boolean11 = compareCards(imageValue, button11);
+                            boolean11 = compareCards(imageValue, imageView_11);
                         }
                     }
                 }
-
             }
         });
-        button12.setOnClickListener(new View.OnClickListener() {
+        imageView_12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (cardsFlipped < 2) {
                     if (!boolean12) {
                         if (!flipped) {
                             int imageValue = matriz[3][2];
-                            boolean12 = isNotFlipped(imageValue, button12, "boolean12");
+                            boolean12 = flipTheCard(imageValue, imageView_12, "boolean12");
                         } else {
                             int imageValue = matriz[3][2];
-                            boolean12 = compareCards(imageValue, button12);
+                            boolean12 = compareCards(imageValue, imageView_12);
                         }
                     }
                 }
-
             }
         });
 
@@ -262,66 +250,66 @@ public class GameActivity extends Activity {
 
     }
 
-    public int[][] sorteiaPecas(){
+    public int[][] sorteiaPecas() {
 
-        int [][] matriz = new int[4][3];
+        int[][] matriz = new int[4][3];
 
         Random rnd = new Random();
 
-        int zero=0,um=0,dois=0,tres=0,quatro=0,cinco=0;
+        int zero = 0, um = 0, dois = 0, tres = 0, quatro = 0, cinco = 0;
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
 
                 int rand = rnd.nextInt(6);
 
-                switch(rand) {
+                switch (rand) {
                     case 0:
-                        if(zero<2) {
+                        if (zero < 2) {
                             matriz[i][j] = rand;
-                            zero= zero+1;
-                        }else {
+                            zero = zero + 1;
+                        } else {
                             j--;
                         }
                         break;
                     case 1:
-                        if(um<2) {
+                        if (um < 2) {
                             matriz[i][j] = rand;
-                            um = um+1;
-                        }else {
+                            um = um + 1;
+                        } else {
                             j--;
                         }
                         break;
                     case 2:
-                        if(dois<2) {
+                        if (dois < 2) {
                             matriz[i][j] = rand;
-                            dois= dois+ 1;
-                        }else {
+                            dois = dois + 1;
+                        } else {
                             j--;
                         }
                         break;
                     case 3:
-                        if(tres<2) {
+                        if (tres < 2) {
                             matriz[i][j] = rand;
                             tres = tres + 1;
-                        }else {
+                        } else {
                             j--;
                         }
                         break;
                     case 4:
-                        if(quatro<2) {
+                        if (quatro < 2) {
                             matriz[i][j] = rand;
-                            quatro = quatro+1;
-                        }else {
+                            quatro = quatro + 1;
+                        } else {
                             j--;
                         }
                         break;
 
                     case 5:
-                        if(cinco<2) {
+                        if (cinco < 2) {
                             matriz[i][j] = rand;
-                            cinco = cinco+1;
-                        }else {
+                            cinco = cinco + 1;
+                        } else {
                             j--;
                         }
                         break;
@@ -332,224 +320,230 @@ public class GameActivity extends Activity {
         return matriz;
     }
 
-    public void setDrawables(int imgValue, ImageView button){
-        switch (imgValue){
+    public void setImage(int imageValue, ImageView buttonToChange) {
+        switch (imageValue) {
             case 0:
-                button.setImageDrawable(getResources().getDrawable(R.drawable.pikachu));
+                buttonToChange.setImageDrawable(getResources().getDrawable(R.drawable.pikachu));
                 break;
             case 1:
-                button.setImageDrawable(getResources().getDrawable(R.drawable.bulbasaur));
+                buttonToChange.setImageDrawable(getResources().getDrawable(R.drawable.bulbasaur));
                 break;
             case 2:
-                button.setImageDrawable(getResources().getDrawable(R.drawable.charmander));
+                buttonToChange.setImageDrawable(getResources().getDrawable(R.drawable.charmander));
                 break;
             case 3:
-                button.setImageDrawable(getResources().getDrawable(R.drawable.eevee));
+                buttonToChange.setImageDrawable(getResources().getDrawable(R.drawable.eevee));
                 break;
             case 4:
-                button.setImageDrawable(getResources().getDrawable(R.drawable.squirtle));
+                buttonToChange.setImageDrawable(getResources().getDrawable(R.drawable.squirtle));
                 break;
             case 5:
-                button.setImageDrawable(getResources().getDrawable(R.drawable.meowth));
+                buttonToChange.setImageDrawable(getResources().getDrawable(R.drawable.meowth));
                 break;
         }
     }
 
-    private void setDrawableBack(ImageView image){
+    private void setImageBack(ImageView image) {
         image.setImageDrawable(getResources().getDrawable(R.drawable.cardbackground));
     }
 
-    private boolean compareCards(int imageValue, final ImageView image){
+    private boolean compareCards(int imageValuePressed, final ImageView imagePressed) {
 
         playerTries++;
         String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
         textViewTries.setText(triesText);
 
-        if (imageValue == valueFlippedImage){
+        if (imageValuePressed == imageValueFlipped) {
             cardsUp--;
             cardsFlipped = 2;
-            playerScore++;
-            playSoundCorrect();
+            playCardSound("correct");
+            sumPoint();
             flipped = false;
-            setDrawables(imageValue, image);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    String scoreText = getString(R.string.score) + ": " + Integer.toString(playerScore);
-                    textViewScore.setText(scoreText);
-                    image.setVisibility(View.INVISIBLE);
-                    lastButtonClicked.setVisibility(View.INVISIBLE);
-                    lastButtonClicked = null;
-                    cardsFlipped = 0;
-                }
-            }, DELAY_TIME);
+            setImage(imageValuePressed, imagePressed);
+            delay("correctPair", imagePressed);
 
-            if(cardsUp==0){
+            if (cardsUp == 0)
                 ShowEndGamePopUp();
-            }
 
             return true;
-        }
-        else {
+        } else {
             flipped = false;
-            playSoundFailed();
-            setDrawables(imageValue, image);
+            playCardSound("wrong");
+            setImage(imageValuePressed, imagePressed);
             cardsFlipped = 2;
-            switch (lastBooleanClicked){
-                case "boolean1":
-                    boolean1 = false;
-                    break;
-                case "boolean2":
-                    boolean2 = false;
-                    break;
-                case "boolean3":
-                    boolean3 = false;
-                    break;
-                case "boolean4":
-                    boolean4 = false;
-                    break;
-                case "boolean5":
-                    boolean5 = false;
-                    break;
-                case "boolean6":
-                    boolean6 = false;
-                    break;
-                case "boolean7":
-                    boolean7 = false;
-                    break;
-                case "boolean8":
-                    boolean8 = false;
-                    break;
-                case "boolean9":
-                    boolean9 = false;
-                    break;
-                case "boolean10":
-                    boolean10 = false;
-                    break;
-                case "boolean11":
-                    boolean11 = false;
-                    break;
-                case "boolean12":
-                    boolean12 = false;
-                    break;
-            }
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    setDrawableBack(image);
-                    setDrawableBack(lastButtonClicked);
-                    lastButtonClicked = null;
-                    cardsFlipped = 0;
-                }
-            }, DELAY_TIME);
+            resetLastBooleanClicked(lastBooleanClicked);
+            delay("wrongPair", imagePressed);
+
             return false;
         }
     }
 
-    private boolean isNotFlipped(int imageValue, ImageView buttonName, String bool){
+    private void sumPoint(){
+        long difference = System.currentTimeMillis() - startTime;
+        playerScore += 20 - difference / 1000;
+        startTime=System.currentTimeMillis();
+    }
+
+    private void delay (String TypeOfPause,final ImageView imageToChange){
+
+        switch (TypeOfPause){
+            case "correctPair":
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        String scoreText = getString(R.string.score) + ": " + Integer.toString(playerScore);
+                        textViewScore.setText(scoreText);
+                        imageToChange.setVisibility(View.INVISIBLE);
+                        lastImageViewClicked.setVisibility(View.INVISIBLE);
+                        lastImageViewClicked = null;
+                        cardsFlipped = 0;
+                    }
+                }, DELAY_TIME);
+                break;
+
+            case"wrongPair":
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setImageBack(imageToChange);
+                        setImageBack(lastImageViewClicked);
+                        lastImageViewClicked = null;
+                        cardsFlipped = 0;
+                    }
+                }, DELAY_TIME);
+                break;
+
+        }
+    }
+
+    private boolean flipTheCard(int imageValue, ImageView buttonPressed, String bool) {
         flipped = true;
-        valueFlippedImage = imageValue;
-        setDrawables(imageValue, buttonName);
-        lastButtonClicked = buttonName;
+        imageValueFlipped = imageValue;
+        setImage(imageValue, buttonPressed);
+        lastImageViewClicked = buttonPressed;
         lastBooleanClicked = bool;
         cardsFlipped = 1;
         return true;
     }
 
-    private void setViews(){
-        textViewScore = findViewById(R.id.textViewScore);
-        textViewTries = findViewById(R.id.textViewTries);
-        button1 = findViewById(R.id.ImageView1Id);
-        button2 = findViewById(R.id.ImageView2Id);
-        button3 = findViewById(R.id.ImageView3Id);
-        button4 = findViewById(R.id.ImageView4Id);
-        button5 = findViewById(R.id.ImageView5Id);
-        button6 = findViewById(R.id.ImageView6Id);
-        button7 = findViewById(R.id.ImageView7Id);
-        button8 = findViewById(R.id.ImageView8Id);
-        button9 = findViewById(R.id.ImageView9Id);
-        button10 = findViewById(R.id.ImageView10Id);
-        button11 = findViewById(R.id.ImageView11Id);
-        button12 = findViewById(R.id.ImageView12Id);
+    private void resetLastBooleanClicked(String lastBooleanClicked){
+        switch (lastBooleanClicked) {
+            case "boolean1":
+                boolean1 = false;
+                break;
+            case "boolean2":
+                boolean2 = false;
+                break;
+            case "boolean3":
+                boolean3 = false;
+                break;
+            case "boolean4":
+                boolean4 = false;
+                break;
+            case "boolean5":
+                boolean5 = false;
+                break;
+            case "boolean6":
+                boolean6 = false;
+                break;
+            case "boolean7":
+                boolean7 = false;
+                break;
+            case "boolean8":
+                boolean8 = false;
+                break;
+            case "boolean9":
+                boolean9 = false;
+                break;
+            case "boolean10":
+                boolean10 = false;
+                break;
+            case "boolean11":
+                boolean11 = false;
+                break;
+            case "boolean12":
+                boolean12 = false;
+                break;
+        }
     }
 
-    public void checkSound(){
+    private void setViews() {
+        textViewScore = findViewById(R.id.textViewScore);
+        textViewTries = findViewById(R.id.textViewTries);
+        ImageView_1 = findViewById(R.id.ImageView1Id);
+        imageView_2 = findViewById(R.id.ImageView2Id);
+        imageView_3 = findViewById(R.id.ImageView3Id);
+        imageView_4 = findViewById(R.id.ImageView4Id);
+        imageView_5 = findViewById(R.id.ImageView5Id);
+        imageView_6 = findViewById(R.id.ImageView6Id);
+        imageView_7 = findViewById(R.id.ImageView7Id);
+        imageView_8 = findViewById(R.id.ImageView8Id);
+        imageView_9 = findViewById(R.id.ImageView9Id);
+        imageView_10 = findViewById(R.id.ImageView10Id);
+        imageView_11 = findViewById(R.id.ImageView11Id);
+        imageView_12 = findViewById(R.id.ImageView12Id);
+    }
+
+    public void checkSoundStatus(String typeMusic) {
         Bundle extra = getIntent().getExtras();
         String text = extra.getString("som");
-        if(extra != null){
-            if(text.equals("ativado")) {
-                playMusic();
+        if (extra != null) {
+            if (text.equals("ativado")) {
+                if(typeMusic.equalsIgnoreCase("inGame")){
+                playMusic("inGame");
+                }else{
+                    playMusic("endGame");
+                }
             }
         }
     }
 
-    public void playMusic(){
+    public void playMusic(String typeMusic) {
 
-        mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.pokemontheme);
-        mediaPlayer.start();
-        mediaPlayer.setLooping(true);
-
-    }
-
-    public void playSoundCorrect(){
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.correctsound);
-        mediaPlayer.start();
-
-    }
-
-    public void playSoundFailed(){
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.failedsound);
-        mediaPlayer.start();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-
-        if(mediaPlayer != null){
-            mediaPlayer.release();
-            mediaPlayer = null;
+        switch (typeMusic) {
+            case "inGame":
+                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.ingamemusic);
+                mediaPlayer.start();
+                mediaPlayer.setLooping(true);
+                break;
+//          A ARRUMAR
+//          case "endGame":
+//              mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.endgamemusic);
+//              mediaPlayer.stop();
+//              mediaPlayer.start();
+//              break;
         }
-
-        super.onDestroy();
     }
 
-    @Override
-    protected void onStop() {
+    public void playCardSound(String soundType) {
 
-        if (mediaPlayer !=  null && mediaPlayer.isPlaying()){
-            mediaPlayer.pause();
+        switch (soundType) {
+            case "correct":
+                MediaPlayer soundCorrect = MediaPlayer.create(this, R.raw.correctsound);
+                soundCorrect.start();
+                break;
+            case "wrong":
+                MediaPlayer soundWrong = MediaPlayer.create(this, R.raw.failedsound);
+                soundWrong.start();
         }
-
-        super.onStop();
     }
 
-    @Override
-    protected void onRestart() {
-
-        if (mediaPlayer != null && !mediaPlayer.isPlaying()){
-            mediaPlayer.start();
-        }
-
-        super.onRestart();
-
-    }
-
-    public void ShowEndGamePopUp(){
+    public void ShowEndGamePopUp() {
 
         TextView textViewPointsEndGame;
 
         DialogEndGame.setContentView(R.layout.end_game_popup);
-        buttonMenu = DialogEndGame.findViewById(R.id.ButtonBackId);
-        buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
+        Button buttonMenu = DialogEndGame.findViewById(R.id.ButtonBackId);
+        Button buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
         textViewPointsEndGame = DialogEndGame.findViewById(R.id.textViewPoints);
 
+        checkSoundStatus("endGame");
+
         DialogEndGame.setCanceledOnTouchOutside(false);
-
-        textViewPointsEndGame.setText(Integer.toString(playerScore)); // ESTA DANDO ERRO AQUI
-
+        textViewPointsEndGame.setText(Integer.toString(playerScore));
         DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DialogEndGame.show();
+
         buttonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -564,6 +558,39 @@ public class GameActivity extends Activity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+
+        super.onRestart();
+
+    }
+
 }
 
 
