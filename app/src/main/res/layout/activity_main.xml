@@ -51,6 +51,17 @@
         android:layout_below="@id/buttonMultiplayer"
         android:text="Ranking" />
 
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonRanking"
+        android:layout_alignStart="@id/buttonRanking"
+        android:layout_alignEnd="@id/buttonRanking"
+        android:layout_alignLeft="@id/buttonRanking"
+        android:layout_alignRight="@id/buttonRanking"
+        android:text="Login" />
+
     <ImageButton
         android:id="@+id/buttonSound"
         android:layout_width="wrap_content"
@@ -60,7 +71,5 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"
         android:background="@drawable/sound_on" />
-
-
 
 </RelativeLayout>

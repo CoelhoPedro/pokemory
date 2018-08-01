@@ -1,6 +1,8 @@
 package com.example.pedro.pokemory;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +17,11 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     public boolean isOn = true;
-    public Button buttonNewGame, buttonRanking, buttonMultiplayer;
+    public Button buttonNewGame, buttonRanking, buttonMultiplayer, buttonLogin;
     private ImageButton buttonSound;
     private SharedPreferences preferences;
     private FirebaseAuth firebaseAuth;
+    private AlertDialog.Builder dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
         buttonRanking = findViewById(R.id.buttonRanking);
         buttonMultiplayer = findViewById(R.id.buttonMultiplayer);
         buttonSound = findViewById(R.id.buttonSound);
+        buttonLogin = findViewById(R.id.buttonLogin);
         checkPreferences(preferences);
-
+        checkLogin();
 
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         buttonMultiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                firebaseAuth = FirebaseAuth.getInstance();
+
+                firebaseAuth = FirebaseSettings.getFirebaseAuth();
                 Toast.makeText(MainActivity.this, firebaseAuth.toString(), Toast.LENGTH_SHORT).show();
                 if (firebaseAuth.getCurrentUser() != null){
                     Intent intent = new Intent(MainActivity.this, GameActivity.class);
@@ -101,6 +106,73 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                firebaseAuth = FirebaseSettings.getFirebaseAuth();
+
+                if (firebaseAuth.getCurrentUser() != null) {
+
+                    setDialog();
+
+                } else {
+
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+
+                }
+
+            }
+        });
+
+    }
+
+    private void setDialog() {
+
+        dialog = new AlertDialog.Builder(MainActivity.this);
+
+        dialog.setTitle("Exit");
+        dialog.setMessage("Deseja realmente sair?");
+        dialog.setCancelable(false);
+        dialog.setIcon(android.R.drawable.ic_delete);
+
+        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+
+        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                firebaseAuth = FirebaseSettings.getFirebaseAuth();
+                firebaseAuth.signOut();
+                Toast.makeText(MainActivity.this, "Sucesso ao sair", Toast.LENGTH_SHORT).show();
+                checkLogin();
+
+            }
+        });
+
+        dialog.create();
+        dialog.show();
+
+    }
+
+    private void checkLogin() {
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if (firebaseAuth.getCurrentUser() != null) {
+
+            buttonLogin.setText("Exit");
+
+        } else {
+
+            buttonLogin.setText("Login");
+        }
 
     }
 
