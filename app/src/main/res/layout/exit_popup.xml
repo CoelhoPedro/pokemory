@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="#b0bec5"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -36,17 +36,7 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:textSize="25dp"
-                    android:text="Pontuação"/>
-                <TextView
-                    android:id="@+id/textViewPoints"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:textAlignment="center"
-                    android:textSize="60dp"
-                    android:text="0"
-                    />
+                    android:text="Deseja realmente sair ?"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -56,25 +46,25 @@
                     android:weightSum="2">
 
                     <Button
-                        android:id="@+id/ButtonBackId"
+                        android:id="@+id/ButtonYesId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Menu Inicial"
+                        android:text="Sim"
                         android:padding="15dp"
                         android:background="@drawable/background_button"
+                        android:backgroundTint="#4caf50"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        />
+                        android:layout_weight="1" />
                     <Button
-                        android:id="@+id/ButtonNewGameId"
+                        android:id="@+id/ButtonNoId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Jogar novamente"
+                        android:text="não"
                         android:background="@drawable/background_button"
+                        android:backgroundTint="#f44336"
                         android:padding="15dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        />
+                        android:layout_weight="1" />
                 </LinearLayout>
 
             </LinearLayout>

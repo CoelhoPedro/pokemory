@@ -1,10 +1,13 @@
 package com.example.pedro.pokemory;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,12 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton buttonSound;
     private SharedPreferences preferences;
     private FirebaseAuth firebaseAuth;
-    private AlertDialog.Builder dialog;
+    private Dialog dialogLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dialogLogout = new Dialog(this);
 
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
@@ -115,49 +120,47 @@ public class MainActivity extends AppCompatActivity {
 
                 if (firebaseAuth.getCurrentUser() != null) {
 
-                    setDialog();
+                    ShowLogoutPopUp();
 
                 } else {
 
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-
                 }
-
             }
         });
 
     }
 
-    private void setDialog() {
+    private void ShowLogoutPopUp() {
 
-        dialog = new AlertDialog.Builder(MainActivity.this);
+        dialogLogout.setContentView(R.layout.exit_popup);
 
-        dialog.setTitle("Exit");
-        dialog.setMessage("Deseja realmente sair?");
-        dialog.setCancelable(false);
-        dialog.setIcon(android.R.drawable.ic_delete);
+        Button buttonYes = dialogLogout.findViewById(R.id.ButtonYesId);
+        Button buttonNo = dialogLogout.findViewById(R.id.ButtonNoId);
 
-        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+        dialogLogout.setCanceledOnTouchOutside(false);
+
+        buttonYes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        });
-
-        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
+            public void onClick(View view) {
                 firebaseAuth = FirebaseSettings.getFirebaseAuth();
                 firebaseAuth.signOut();
                 Toast.makeText(MainActivity.this, "Sucesso ao sair", Toast.LENGTH_SHORT).show();
                 checkLogin();
-
+                dialogLogout.dismiss();
             }
         });
 
-        dialog.create();
-        dialog.show();
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogLogout.dismiss();
+            }
+        });
+
+        dialogLogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogLogout.show();
 
     }
 
