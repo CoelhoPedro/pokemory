@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "662940874018",
+    "firebase_url": "https://pokemory-ecf6f.firebaseio.com",
+    "project_id": "pokemory-ecf6f",
+    "storage_bucket": "pokemory-ecf6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662940874018:android:734f740aa02799d4",
+        "android_client_info": {
+          "package_name": "com.example.pedro.pokemory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662940874018-tm9nhcp4vv3okdvig1touf6ivt0070lr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pedro.pokemory",
+            "certificate_hash": "af44554a18096e3c728e14383c5bf996710e9b57"
+          }
+        },
+        {
+          "client_id": "662940874018-1q5fvlvjr6b0j80ojc5d3gppsbhd7s4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pedro.pokemory",
+            "certificate_hash": "e51ab67531eeebf55fbb23a9164c932f1dc98474"
+          }
+        },
+        {
+          "client_id": "662940874018-0cgc4re3uarrcmu8cqf4bhp91dd2mirf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClVW4XfO5-GIpnYG83FxeiE3w1EyWyf8k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662940874018-0cgc4re3uarrcmu8cqf4bhp91dd2mirf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

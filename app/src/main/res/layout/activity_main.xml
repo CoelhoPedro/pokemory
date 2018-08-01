@@ -25,19 +25,30 @@
         android:id="@+id/buttonNewGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonRanking"
+        android:layout_alignEnd="@+id/buttonMultiplayer"
+        android:layout_alignRight="@+id/buttonMultiplayer"
+        android:layout_alignStart="@+id/buttonMultiplayer"
+        android:layout_alignLeft="@+id/buttonMultiplayer"
+        android:layout_above="@+id/buttonMultiplayer"
         android:layout_centerHorizontal="true"
         android:text="@string/newGame" />
+
+    <Button
+        android:id="@+id/buttonMultiplayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Multiplayer" />
 
     <Button
         android:id="@+id/buttonRanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/buttonNewGame"
-        android:layout_alignRight="@+id/buttonNewGame"
-        android:layout_alignStart="@+id/buttonNewGame"
-        android:layout_alignLeft="@+id/buttonNewGame"
-        android:layout_centerInParent="true"
+        android:layout_alignEnd="@+id/buttonMultiplayer"
+        android:layout_alignRight="@+id/buttonMultiplayer"
+        android:layout_alignStart="@+id/buttonMultiplayer"
+        android:layout_alignLeft="@+id/buttonMultiplayer"
+        android:layout_below="@id/buttonMultiplayer"
         android:text="Ranking" />
 
     <ImageButton
