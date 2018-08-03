@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/new_login_gradients">
 
-    <TextView
-        android:id="@+id/textViewGameLogo"
+    <ImageView
+        android:id="@+id/imageViewGameLogo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/buttonNewGame"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:src="@drawable/pokemory_logo"
         android:gravity="center"
         android:text="POKEMORY"
         android:textAllCaps="true"
@@ -31,14 +33,22 @@
         android:layout_alignLeft="@+id/buttonMultiplayer"
         android:layout_above="@+id/buttonMultiplayer"
         android:layout_centerHorizontal="true"
-        android:text="@string/newGame" />
+        android:background="@drawable/background_button"
+        android:backgroundTint="@color/buttonBlue"
+        android:textColor="@color/buttonText"
+        android:text="@string/newGame"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/buttonMultiplayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Multiplayer" />
+        android:background="@drawable/background_button"
+        android:backgroundTint="@color/buttonBlue"
+        android:textColor="#ffcb05"
+        android:text="Multiplayer"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/buttonRanking"
@@ -49,7 +59,11 @@
         android:layout_alignStart="@+id/buttonMultiplayer"
         android:layout_alignLeft="@+id/buttonMultiplayer"
         android:layout_below="@id/buttonMultiplayer"
-        android:text="Ranking" />
+        android:background="@drawable/background_button"
+        android:backgroundTint="@color/buttonBlue"
+        android:textColor="#ffcb05"
+        android:text="Ranking"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/buttonLogin"
@@ -60,7 +74,11 @@
         android:layout_alignEnd="@id/buttonRanking"
         android:layout_alignLeft="@id/buttonRanking"
         android:layout_alignRight="@id/buttonRanking"
-        android:text="Login" />
+        android:background="@drawable/background_button"
+        android:backgroundTint="@color/buttonBlue"
+        android:textColor="@color/buttonText"
+        android:text="Login"
+        android:layout_marginBottom="10dp"/>
 
     <ImageButton
         android:id="@+id/buttonSound"

@@ -36,15 +36,15 @@
                 android:drawablePadding="12dp"
                 android:padding="8dp"
                 android:hint="Nome"
-                android:textColorHint="#fff"
+                android:textColorHint="@color/buttonBlue"
                 android:maxLines="1"
-                android:drawableLeft="@drawable/ic_person_black_24dp"
+                android:drawableLeft="@drawable/ic_person_blue"
                 android:layout_marginTop="70dp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#fff" />
+                android:background="@color/buttonBlue" />
 
             <EditText
                 android:id="@+id/editTextEmailRegister"
@@ -55,16 +55,16 @@
                 android:drawablePadding="12dp"
                 android:padding="8dp"
                 android:hint="email"
-                android:textColorHint="#fff"
+                android:textColorHint="@color/buttonBlue"
                 android:maxLines="1"
                 android:background="@android:color/transparent"
                 android:layout_marginTop="4dp"
-                android:drawableLeft="@drawable/ic_email_black_24dp"/>
+                android:drawableLeft="@drawable/ic_email_blue"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#fff" />
+                android:background="@color/buttonBlue" />
 
             <EditText
                 android:id="@+id/editTextPasswordRegister"
@@ -75,11 +75,11 @@
                 android:drawablePadding="12dp"
                 android:padding="8dp"
                 android:hint="......."
-                android:textColorHint="#fff"
+                android:textColorHint="@color/buttonBlue"
                 android:maxLines="1"
                 android:background="@android:color/transparent"
                 android:layout_marginTop="4dp"
-                android:drawableLeft="@drawable/ic_https_black_24dp"/>
+                android:drawableLeft="@drawable/ic_password_blue"/>
 
             <Button
                 android:id="@+id/buttonRegister"
@@ -88,7 +88,8 @@
                 android:background="@drawable/background_button"
                 android:text="Cadastrar"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
-                android:textColor="#000"
+                android:backgroundTint="@color/buttonBlue"
+                android:textColor="@color/buttonText"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:layout_marginTop="16dp"

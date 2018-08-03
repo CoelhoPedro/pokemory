@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".GameActivity">
+    tools:context=".GameActivity"
+    android:background="@drawable/game_background">
 
     <TextView
         android:id="@+id/textViewScore"
@@ -49,16 +50,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView1Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView2Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView3Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView4Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView5Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView6Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView7Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView8Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView9Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView10Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView11Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
-                <ImageView
+                <com.example.pedro.pokemory.ResizableImageView
                     android:id="@+id/ImageView12Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

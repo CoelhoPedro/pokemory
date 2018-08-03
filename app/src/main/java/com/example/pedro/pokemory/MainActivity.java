@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton buttonSound;
     private SharedPreferences preferences;
     private FirebaseAuth firebaseAuth;
-    private Dialog dialogLogout;
+    private Dialog dialogLogout, dialogGameSelection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dialogLogout = new Dialog(this);
+        dialogGameSelection = new Dialog(this);
 
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
@@ -54,8 +55,10 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     intent.putExtra("som", "desativado");
                 }
-
+                dialogGameSelection.dismiss();
                 startActivity(intent);
+
+                // ShowGameSelectionPopUp(); DESCOMENTAR QUANDO OS MODOS DE JOGO ESTIVEREM PRONTOS
             }
         });
 
@@ -66,10 +69,18 @@ public class MainActivity extends AppCompatActivity {
                 firebaseAuth = FirebaseSettings.getFirebaseAuth();
                 Toast.makeText(MainActivity.this, firebaseAuth.toString(), Toast.LENGTH_SHORT).show();
                 if (firebaseAuth.getCurrentUser() != null){
+
                     Intent intent = new Intent(MainActivity.this, GameActivity.class);
-                    if (isOn) intent.putExtra("som", "ativado");
-                    else intent.putExtra("som", "desativado");
+
+                    if(isOn){
+                        intent.putExtra("som", "ativado");
+                    } else{
+                        intent.putExtra("som", "desativado");
+                    }
+                    dialogGameSelection.dismiss();
                     startActivity(intent);
+
+                    //ShowGameSelectionPopUp(); DESCOMENTAR QUANDO OS MODOS DE JOGO ESTIVEREM PRONTOS
                 }
                 else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -90,25 +101,19 @@ public class MainActivity extends AppCompatActivity {
         buttonSound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(isOn){
-
                     isOn = false;
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("sound", "off");
                     editor.apply();
                     buttonSound.setBackgroundResource(R.drawable.sound_off);
-
                 } else{
-
                     isOn = true;
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("sound", "on");
                     editor.apply();
                     buttonSound.setBackgroundResource(R.drawable.sound_on);
-
                 }
-
             }
         });
 
@@ -129,6 +134,52 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    private void ShowGameSelectionPopUp(){
+
+        dialogGameSelection.setContentView(R.layout.game_selection_popup);
+
+        Button buttonLife = dialogGameSelection.findViewById(R.id.ButtonLifeGameId);
+        Button buttonTime = dialogGameSelection.findViewById(R.id.ButtonTimeGameId);
+
+        buttonLife.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+
+                if(isOn){
+                    intent.putExtra("som", "ativado");
+                } else{
+                    intent.putExtra("som", "desativado");
+                }
+                dialogGameSelection.dismiss();
+                startActivity(intent);
+
+            }
+        });
+
+        buttonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+
+                if(isOn){
+                    intent.putExtra("som", "ativado");
+                } else{
+                    intent.putExtra("som", "desativado");
+                }
+                dialogGameSelection.dismiss();
+                startActivity(intent);
+
+            }
+        });
+
+        dialogGameSelection.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogGameSelection.show();
 
     }
 
@@ -182,11 +233,11 @@ public class MainActivity extends AppCompatActivity {
     private void checkPreferences(SharedPreferences sharedPreferences){
         String soundStatus = sharedPreferences.getString("sound", "on");
         if (soundStatus.equals("on")){
-            buttonSound.setBackgroundResource(R.drawable.sound_on);
+            buttonSound.setBackgroundResource(R.drawable.sound_on_blue);
             isOn = true;
         }
         else {
-            buttonSound.setBackgroundResource(R.drawable.sound_off);
+            buttonSound.setBackgroundResource(R.drawable.ic_volume_off_black_24dp);
             isOn = false;
         }
     }
