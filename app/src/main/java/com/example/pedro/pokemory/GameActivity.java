@@ -36,6 +36,7 @@ public class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_game);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -361,10 +362,13 @@ public class GameActivity extends Activity {
             sumPoint();
             flipped = false;
             setImage(imageValuePressed, imagePressed);
-            delay("correctPair", imagePressed);
 
-            if (cardsUp == 0)
+
+            if (cardsUp == 0) {
                 ShowEndGamePopUp();
+            }else{
+                delay("correctPair", imagePressed);
+            }
 
             return true;
         } else {
@@ -589,7 +593,6 @@ public class GameActivity extends Activity {
         }
 
         super.onRestart();
-
     }
 
 }

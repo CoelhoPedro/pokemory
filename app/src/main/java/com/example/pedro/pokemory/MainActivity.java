@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+/*
+                Intent intent = new Intent(MainActivity.this, GameHardActivity.class);
 
                 if(isOn){
                     intent.putExtra("som", "ativado");
@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("som", "desativado");
                 }
                 dialogGameSelection.dismiss();
-                startActivity(intent);
+                startActivity(intent);*/
 
-                // ShowGameSelectionPopUp(); DESCOMENTAR QUANDO OS MODOS DE JOGO ESTIVEREM PRONTOS
+                 ShowGameSelectionPopUp(); //DESCOMENTAR QUANDO OS MODOS DE JOGO ESTIVEREM PRONTOS
             }
         });
 
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                Intent intent = new Intent(MainActivity.this, GameHardActivity.class);
 
                 if(isOn){
                     intent.putExtra("som", "ativado");

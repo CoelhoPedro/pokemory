@@ -37,6 +37,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
+
         <TableLayout
             android:id="@+id/tableLayout1"
             android:layout_width="wrap_content"
@@ -73,7 +74,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-
                     android:src="@drawable/cardbackground" />
 
             </TableRow>
@@ -88,7 +88,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
@@ -97,7 +96,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
@@ -109,6 +107,7 @@
                     android:layout_weight="1"
 
                     android:src="@drawable/cardbackground" />
+
             </TableRow>
 
             <TableRow
@@ -121,7 +120,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
@@ -130,7 +128,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
@@ -140,7 +137,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-
                     android:src="@drawable/cardbackground" />
 
             </TableRow>
@@ -155,7 +151,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
@@ -164,7 +159,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-
                     android:layout_weight="1"
                     android:src="@drawable/cardbackground" />
 
@@ -174,11 +168,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-
                     android:src="@drawable/cardbackground" />
 
             </TableRow>
-
 
         </TableLayout>
 
