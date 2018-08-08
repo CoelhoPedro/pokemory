@@ -47,8 +47,6 @@ public class GameHardActivity extends Activity {
 
         setContentView(R.layout.activity_game2);
 
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         DialogEndGame = new Dialog(this);
 
         checkSoundStatus("inGame");
@@ -57,8 +55,6 @@ public class GameHardActivity extends Activity {
         setViews();
 
         matriz = sorteiaPecas();
-
-
 
         ImageView_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1222,6 +1218,7 @@ public class GameHardActivity extends Activity {
 
     private void sumPoint(){
         long difference = System.currentTimeMillis() - startTime;
+        if (difference > 119000) difference = 119000;
         playerScore += 120 - difference / 1000;
         startTime=System.currentTimeMillis();
     }
@@ -1400,6 +1397,9 @@ public class GameHardActivity extends Activity {
                 boolean43 = false;
                 break;
             case "boolean44":
+                boolean44 = false;
+                break;
+            case "boolean45":
                 boolean45 = false;
                 break;
             case "boolean46":
@@ -1537,6 +1537,7 @@ public class GameHardActivity extends Activity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DialogEndGame.dismiss();
                 recreate();
             }
         });

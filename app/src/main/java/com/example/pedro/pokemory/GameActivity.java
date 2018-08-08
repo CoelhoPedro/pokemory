@@ -38,9 +38,7 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_game);
-
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        cardsUp = 6;
         DialogEndGame = new Dialog(this);
 
         checkSoundStatus("inGame");
@@ -366,7 +364,8 @@ public class GameActivity extends Activity {
 
             if (cardsUp == 0) {
                 ShowEndGamePopUp();
-            }else{
+            }
+            else{
                 delay("correctPair", imagePressed);
             }
 
@@ -385,6 +384,7 @@ public class GameActivity extends Activity {
 
     private void sumPoint(){
         long difference = System.currentTimeMillis() - startTime;
+        if (difference > 19000) difference = 19000;
         playerScore += 20 - difference / 1000;
         startTime=System.currentTimeMillis();
     }
@@ -495,7 +495,7 @@ public class GameActivity extends Activity {
         if (extra != null) {
             if (text.equals("ativado")) {
                 if(typeMusic.equalsIgnoreCase("inGame")){
-                playMusic("inGame");
+                    playMusic("inGame");
                 }else{
                     playMusic("endGame");
                 }
@@ -559,6 +559,7 @@ public class GameActivity extends Activity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DialogEndGame.dismiss();
                 recreate();
             }
         });
@@ -595,6 +596,10 @@ public class GameActivity extends Activity {
         super.onRestart();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
 
 

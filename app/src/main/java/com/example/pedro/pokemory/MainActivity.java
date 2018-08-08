@@ -1,9 +1,7 @@
 package com.example.pedro.pokemory;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -106,13 +104,13 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("sound", "off");
                     editor.apply();
-                    buttonSound.setBackgroundResource(R.drawable.sound_off);
+                    buttonSound.setBackgroundResource(R.drawable.sound_off_blue);
                 } else{
                     isOn = true;
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("sound", "on");
                     editor.apply();
-                    buttonSound.setBackgroundResource(R.drawable.sound_on);
+                    buttonSound.setBackgroundResource(R.drawable.sound_on_blue);
                 }
             }
         });
@@ -237,8 +235,13 @@ public class MainActivity extends AppCompatActivity {
             isOn = true;
         }
         else {
-            buttonSound.setBackgroundResource(R.drawable.ic_volume_off_black_24dp);
+            buttonSound.setBackgroundResource(R.drawable.sound_off_blue);
             isOn = false;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
