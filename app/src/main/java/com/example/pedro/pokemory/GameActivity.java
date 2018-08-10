@@ -1,8 +1,12 @@
 package com.example.pedro.pokemory;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -30,8 +35,11 @@ public class GameActivity extends Activity {
     private int imageValueFlipped, playerScore = 0, playerTries = 0, cardsFlipped = 0, cardsUp = 6;
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
+    private SharedPreferences preferences;
+    private AlertDialog.Builder dialog;
     Dialog DialogEndGame;
     long startTime = System.currentTimeMillis();
+    private boolean exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -565,6 +573,7 @@ public class GameActivity extends Activity {
         });
     }
 
+
     @Override
     protected void onDestroy() {
 
@@ -598,7 +607,36 @@ public class GameActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+
+        dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle("Exit");
+        dialog.setMessage("Deseja realmente sair?");
+        dialog.setCancelable(false);
+        dialog.setIcon(android.R.drawable.ic_delete);
+        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exit = false;
+            }
+        });
+        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exit = true;
+            }
+        });
+
+        dialog.create();
+        dialog.show();
+
+        if(exit) {
+            Intent intent = new Intent(GameActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+
         super.onBackPressed();
+
     }
 }
 
