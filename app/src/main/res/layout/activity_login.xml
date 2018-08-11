@@ -24,6 +24,7 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginBottom="20dp"
                 android:text="Login"
+                android:textColor="@color/buttonBlue"
                 android:textSize="30dp"
                 android:gravity="center"/>
 
@@ -37,6 +38,7 @@
                 android:drawablePadding="12dp"
                 android:padding="8dp"
                 android:hint="Username"
+                android:textColor="@color/buttonBlue"
                 android:textColorHint="@color/buttonBlue"
                 android:maxLines="1"
                 android:drawableLeft="@drawable/ic_person_blue"
@@ -56,6 +58,7 @@
                 android:drawablePadding="12dp"
                 android:padding="8dp"
                 android:hint="......."
+                android:textColor="@color/buttonBlue"
                 android:textColorHint="@color/buttonBlue"
                 android:maxLines="1"
                 android:background="@android:color/transparent"

@@ -27,6 +27,12 @@
         <activity android:name=".GameHardActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
+        <activity android:name=".GameEasyTimeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".GameHardTimeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".RankingActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>

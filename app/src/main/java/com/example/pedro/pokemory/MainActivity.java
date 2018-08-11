@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 dialogGameSelection.dismiss();
                 startActivity(intent);*/
 
-                 ShowGameSelectionPopUp(); //DESCOMENTAR QUANDO OS MODOS DE JOGO ESTIVEREM PRONTOS
+                 ShowGameSelectionTypePopUp(); //DESCOMENTAR QUANDO OS MODOS DE JOGO ESTIVEREM PRONTOS
             }
         });
 
@@ -135,26 +135,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void ShowGameSelectionPopUp(){
+    private void ShowGameSelectionTypePopUp(){
 
-        dialogGameSelection.setContentView(R.layout.game_selection_popup);
+        dialogGameSelection.setContentView(R.layout.game_type_selection_popup);
 
-        Button buttonLife = dialogGameSelection.findViewById(R.id.ButtonLifeGameId);
+        Button buttonNomal = dialogGameSelection.findViewById(R.id.ButtonNormalGameId);
         Button buttonTime = dialogGameSelection.findViewById(R.id.ButtonTimeGameId);
 
-        buttonLife.setOnClickListener(new View.OnClickListener() {
+        buttonNomal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, GameHardActivity.class);
-
-                if(isOn){
-                    intent.putExtra("som", "ativado");
-                } else{
-                    intent.putExtra("som", "desativado");
-                }
-                dialogGameSelection.dismiss();
-                startActivity(intent);
+                ShowGameSelectionDificultPopUp("Normal");
 
             }
         });
@@ -163,16 +155,82 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                ShowGameSelectionDificultPopUp("Time");
 
-                if(isOn){
-                    intent.putExtra("som", "ativado");
-                } else{
-                    intent.putExtra("som", "desativado");
+            }
+        });
+
+        dialogGameSelection.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogGameSelection.show();
+
+    }
+
+    private void ShowGameSelectionDificultPopUp(final String type){
+
+        dialogGameSelection.setContentView(R.layout.game_selection_popup);
+
+        Button buttonEasy = dialogGameSelection.findViewById(R.id.ButtonEasyGameId);
+        Button buttonHard = dialogGameSelection.findViewById(R.id.ButtonHardGameId);
+
+        buttonEasy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                switch (type){
+                    case "Normal":
+                        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+
+                        if(isOn){
+                            intent.putExtra("som", "ativado");
+                        } else{
+                            intent.putExtra("som", "desativado");
+                        }
+                        dialogGameSelection.dismiss();
+                        startActivity(intent);
+                        break;
+                    case "Time":
+                        Intent intent2 = new Intent(MainActivity.this, GameEasyTimeActivity.class);
+
+                        if(isOn){
+                            intent2.putExtra("som", "ativado");
+                        } else{
+                            intent2.putExtra("som", "desativado");
+                        }
+                        dialogGameSelection.dismiss();
+                        startActivity(intent2);
+                        break;
                 }
-                dialogGameSelection.dismiss();
-                startActivity(intent);
+            }
+        });
 
+        buttonHard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                switch (type){
+                    case "Normal":
+                        Intent intent = new Intent(MainActivity.this, GameHardActivity.class);
+
+                        if(isOn){
+                            intent.putExtra("som", "ativado");
+                        } else{
+                            intent.putExtra("som", "desativado");
+                        }
+                        dialogGameSelection.dismiss();
+                        startActivity(intent);
+                        break;
+                    case "Time":
+                        Intent intent2 = new Intent(MainActivity.this, GameHardTimeActivity.class);
+
+                        if(isOn){
+                            intent2.putExtra("som", "ativado");
+                        } else{
+                            intent2.putExtra("som", "desativado");
+                        }
+                        dialogGameSelection.dismiss();
+                        startActivity(intent2);
+                        break;
+                }
             }
         });
 

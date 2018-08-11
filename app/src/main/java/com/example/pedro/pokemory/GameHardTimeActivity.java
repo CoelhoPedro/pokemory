@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +18,9 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class GameHardActivity extends Activity {
+public class GameHardTimeActivity extends Activity {
 
-    private TextView textViewScore, textViewTries;
+    private TextView textViewTime;
     public MediaPlayer mediaPlayer;
     public ImageView ImageView_1,imageView_2,imageView_3,imageView_4,imageView_5,imageView_6,
             imageView_7,imageView_8,imageView_9,imageView_10,imageView_11,imageView_12,imageView_13,
@@ -34,25 +35,23 @@ public class GameHardActivity extends Activity {
             boolean19,boolean20,boolean21,boolean22,boolean23,boolean24,boolean25,boolean26,boolean27,boolean28,
             boolean29,boolean30,boolean31,boolean32,boolean33,boolean34,boolean35,boolean36,boolean37,boolean38,
             boolean39,boolean40,boolean41,boolean42,boolean43,boolean44,boolean45,boolean46,boolean47,boolean48,
-            flipped = false;
-    private int imageValueFlipped, playerScore = 0, playerTries = 0, cardsFlipped = 0, cardsUp = 24;
+            flipped = false,timerRunning= false;
+    private int imageValueFlipped, playerTries = 0, cardsFlipped = 0, cardsUp = 24;
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
     Dialog DialogEndGame;
-    long startTime = System.currentTimeMillis();
+    private long timeLeftInMilliseconds = 300000; // 1 minuto;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_game_hard_normal);
-
+        setContentView(R.layout.activity_game_hard_time);
         DialogEndGame = new Dialog(this);
-
         checkSoundStatus("inGame");
-
-
         setViews();
+        startStopTimer();
 
         matriz = sorteiaPecas();
 
@@ -1188,17 +1187,16 @@ public class GameHardActivity extends Activity {
 
         playerTries++;
         String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
-        textViewTries.setText(triesText);
 
         if (imageValuePressed == imageValueFlipped) {
             cardsUp--;
             cardsFlipped = 2;
             playCardSound("correct");
-            sumPoint();
             flipped = false;
             setImage(imageValuePressed, imagePressed);
             if (cardsUp == 0) {
-                ShowEndGamePopUp("Pontuação");
+                stopTimer();
+                ShowEndGamePopUp("Tempo", true);
             }else{
                 delay("correctPair", imagePressed);
             }
@@ -1216,13 +1214,6 @@ public class GameHardActivity extends Activity {
         }
     }
 
-    private void sumPoint(){
-        long difference = System.currentTimeMillis() - startTime;
-        if (difference > 119000) difference = 119000;
-        playerScore += 120 - difference / 1000;
-        startTime=System.currentTimeMillis();
-    }
-
     private void delay (String TypeOfPause,final ImageView imageToChange){
 
         switch (TypeOfPause){
@@ -1230,8 +1221,6 @@ public class GameHardActivity extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        String scoreText = getString(R.string.score) + ": " + Integer.toString(playerScore);
-                        textViewScore.setText(scoreText);
                         imageToChange.setVisibility(View.INVISIBLE);
                         lastImageViewClicked.setVisibility(View.INVISIBLE);
                         lastImageViewClicked = null;
@@ -1251,7 +1240,6 @@ public class GameHardActivity extends Activity {
                     }
                 }, DELAY_TIME);
                 break;
-
         }
     }
 
@@ -1415,8 +1403,7 @@ public class GameHardActivity extends Activity {
     }
 
     private void setViews() {
-        textViewScore = findViewById(R.id.textViewScore);
-        textViewTries = findViewById(R.id.textViewTries);
+        textViewTime = findViewById(R.id.textViewTime);
         ImageView_1 = findViewById(R.id.ImageView1HardId);
         imageView_2 = findViewById(R.id.ImageView2HardId);
         imageView_3 = findViewById(R.id.ImageView3HardId);
@@ -1485,14 +1472,14 @@ public class GameHardActivity extends Activity {
 
         switch (typeMusic) {
             case "inGame":
-                mediaPlayer = MediaPlayer.create(GameHardActivity.this, R.raw.ingamemusic);
+                mediaPlayer = MediaPlayer.create(this, R.raw.ingamemusic);
                 mediaPlayer.start();
                 mediaPlayer.setLooping(true);
                 break;
 //          A ARRUMAR
             case "endGame":
                 mediaPlayer.stop();
-                mediaPlayer = MediaPlayer.create(GameHardActivity.this, R.raw.endgamemusic);
+                mediaPlayer = MediaPlayer.create(this, R.raw.endgamemusic);
                 mediaPlayer.start();
                 break;
         }
@@ -1511,9 +1498,17 @@ public class GameHardActivity extends Activity {
         }
     }
 
-    public void ShowEndGamePopUp(String textTitle) {
+    public void ShowEndGamePopUp(String textTitle, boolean showTime) {
 
         TextView textViewPointsEndGame, textViewTitle;
+        int minutes = (int) timeLeftInMilliseconds / 60000;
+        int seconds = (int) timeLeftInMilliseconds % 60000/ 1000;
+        int minutesTaken = 4 - minutes;
+        int secondsTaken = 60-seconds;
+        String timeTaken;
+
+        timeTaken ="" + minutesTaken;
+        timeTaken += ":"+ secondsTaken;
 
         DialogEndGame.setContentView(R.layout.end_game_popup);
         Button buttonMenu = DialogEndGame.findViewById(R.id.ButtonBackId);
@@ -1521,14 +1516,43 @@ public class GameHardActivity extends Activity {
         textViewPointsEndGame = DialogEndGame.findViewById(R.id.textViewPoints);
         textViewTitle = DialogEndGame.findViewById(R.id.textViewTitle);
 
+
         checkSoundStatus("endGame");
 
         DialogEndGame.setCanceledOnTouchOutside(false);
-        textViewPointsEndGame.setText(Integer.toString(playerScore));
+        textViewTitle.setText(textTitle);
+        if (showTime){
+            textViewPointsEndGame.setText(timeTaken);
+        }else{
+            textViewPointsEndGame.setText("Game Over");
+        }
         DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DialogEndGame.show();
 
-        textViewTitle.setText(textTitle);
+        buttonMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogEndGame.dismiss();
+                recreate();
+            }
+        });
+    }
+
+    public void ShowGameOverPopUp(){
+
+        DialogEndGame.setContentView(R.layout.end_game_over_popup);
+        Button buttonMenu = DialogEndGame.findViewById(R.id.ButtonBackId);
+        Button buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
+
+        DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        DialogEndGame.show();
 
         buttonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1576,6 +1600,50 @@ public class GameHardActivity extends Activity {
 
         super.onRestart();
 
+    }
+
+    public void startStopTimer(){
+        if(timerRunning){
+            stopTimer();
+        }else{
+            startTimer();
+        }
+    }
+
+    public void startTimer(){
+        countDownTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
+            @Override
+            public void onTick(long l) {
+                timeLeftInMilliseconds = l;
+                updateTimer();
+            }
+
+            @Override
+            public void onFinish() {
+                stopTimer();
+                ShowGameOverPopUp();
+            }
+        }.start();
+        timerRunning=true;
+    }
+
+    public void stopTimer(){
+        countDownTimer.cancel();
+        timerRunning = false;
+    }
+
+    public void updateTimer(){
+        int minutes = (int) timeLeftInMilliseconds / 60000;
+        int seconds = (int) timeLeftInMilliseconds % 60000/ 1000;
+
+        String timeLeftText;
+
+        timeLeftText = "" + minutes;
+        timeLeftText += ":";
+        if(seconds<10) timeLeftText += "0";
+        timeLeftText += seconds;
+
+        textViewTime.setText(timeLeftText);
     }
 
 }

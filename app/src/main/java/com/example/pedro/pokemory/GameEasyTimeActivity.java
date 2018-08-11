@@ -1,62 +1,51 @@
 package com.example.pedro.pokemory;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 
-public class GameActivity extends Activity {
+public class GameEasyTimeActivity extends Activity {
 
-    private TextView textViewScore, textViewTries;
+    private TextView  textViewTime;
     public MediaPlayer mediaPlayer;
     public ImageView ImageView_1, imageView_2, imageView_3, imageView_4, imageView_5, imageView_6,
             imageView_7, imageView_8, imageView_9, imageView_10, imageView_11, imageView_12,
             lastImageViewClicked;
     public int[][] matriz;
     private boolean boolean1, boolean2, boolean3, boolean4, boolean5, boolean6, boolean7, boolean8,
-            boolean9, boolean10, boolean11, boolean12, flipped = false;
-    private int imageValueFlipped, playerScore = 0, playerTries = 0, cardsFlipped = 0, cardsUp = 6;
+            boolean9, boolean10, boolean11, boolean12, flipped = false, timerRunning= false;
+    private int imageValueFlipped, cardsFlipped = 0, cardsUp = 6;
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
-    private SharedPreferences preferences;
-    private AlertDialog.Builder dialog;
     Dialog DialogEndGame;
-    long startTime = System.currentTimeMillis();
-    private boolean exit;
+    private long timeLeftInMilliseconds = 600000; // 1 minuto;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_game_easy_normal);
+        setContentView(R.layout.activity_game_easy_time);
         cardsUp = 6;
         DialogEndGame = new Dialog(this);
-
         checkSoundStatus("inGame");
-
         setViews();
-
-        String scoreText = getString(R.string.score) + ": " + Integer.toString(playerScore);
-        textViewScore.setText(scoreText);
-        String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
-        textViewTries.setText(triesText);
+        startStopTimer();
 
         ImageView_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -357,25 +346,22 @@ public class GameActivity extends Activity {
 
     private boolean compareCards(int imageValuePressed, final ImageView imagePressed) {
 
-        playerTries++;
-        String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
-        textViewTries.setText(triesText);
-
         if (imageValuePressed == imageValueFlipped) {
             cardsUp--;
             cardsFlipped = 2;
             playCardSound("correct");
-            sumPoint();
             flipped = false;
             setImage(imageValuePressed, imagePressed);
 
 
             if (cardsUp == 0) {
-                ShowEndGamePopUp("Pontuação");
+                stopTimer();
+                ShowEndGamePopUp("Tempo", true);
             }
             else{
                 delay("correctPair", imagePressed);
             }
+
             return true;
         } else {
             flipped = false;
@@ -389,13 +375,6 @@ public class GameActivity extends Activity {
         }
     }
 
-    private void sumPoint(){
-        long difference = System.currentTimeMillis() - startTime;
-        if (difference > 19000) difference = 19000;
-        playerScore += 20 - difference / 1000;
-        startTime=System.currentTimeMillis();
-    }
-
     private void delay (String TypeOfPause,final ImageView imageToChange){
 
         switch (TypeOfPause){
@@ -403,8 +382,6 @@ public class GameActivity extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        String scoreText = getString(R.string.score) + ": " + Integer.toString(playerScore);
-                        textViewScore.setText(scoreText);
                         imageToChange.setVisibility(View.INVISIBLE);
                         lastImageViewClicked.setVisibility(View.INVISIBLE);
                         lastImageViewClicked = null;
@@ -480,8 +457,8 @@ public class GameActivity extends Activity {
     }
 
     private void setViews() {
-        textViewScore = findViewById(R.id.textViewScore);
-        textViewTries = findViewById(R.id.textViewTries);
+        textViewTime = findViewById(R.id.textViewTime);
+        //textViewTries = findViewById(R.id.textViewTries);
         ImageView_1 = findViewById(R.id.ImageView1Id);
         imageView_2 = findViewById(R.id.ImageView2Id);
         imageView_3 = findViewById(R.id.ImageView3Id);
@@ -514,16 +491,16 @@ public class GameActivity extends Activity {
 
         switch (typeMusic) {
             case "inGame":
-                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.ingamemusic);
+                mediaPlayer = MediaPlayer.create(this, R.raw.ingamemusic);
                 mediaPlayer.start();
                 mediaPlayer.setLooping(true);
                 break;
 //          A ARRUMAR
-          case "endGame":
-              mediaPlayer.stop();
-              mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.endgamemusic);
-              mediaPlayer.start();
-              break;
+            case "endGame":
+                mediaPlayer.stop();
+                mediaPlayer = MediaPlayer.create(this, R.raw.endgamemusic);
+                mediaPlayer.start();
+                break;
         }
     }
 
@@ -540,9 +517,11 @@ public class GameActivity extends Activity {
         }
     }
 
-    public void ShowEndGamePopUp(String textTitle) {
+    public void ShowEndGamePopUp(String textTitle, boolean showTime) {
 
         TextView textViewPointsEndGame, textViewTitle;
+        int seconds = (int) timeLeftInMilliseconds % 60000/ 1000;
+        int timeTaked = 60-seconds;
 
         DialogEndGame.setContentView(R.layout.end_game_popup);
         Button buttonMenu = DialogEndGame.findViewById(R.id.ButtonBackId);
@@ -554,7 +533,11 @@ public class GameActivity extends Activity {
 
         DialogEndGame.setCanceledOnTouchOutside(false);
         textViewTitle.setText(textTitle);
-        textViewPointsEndGame.setText(Integer.toString(playerScore));
+        if (showTime){
+            textViewPointsEndGame.setText(Integer.toString(timeTaked));
+        }else{
+            textViewPointsEndGame.setText("Game Over");
+        }
         DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DialogEndGame.show();
 
@@ -574,6 +557,30 @@ public class GameActivity extends Activity {
         });
     }
 
+    public void ShowGameOverPopUp(){
+
+        DialogEndGame.setContentView(R.layout.end_game_over_popup);
+        Button buttonMenu = DialogEndGame.findViewById(R.id.ButtonBackId);
+        Button buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
+
+        DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        DialogEndGame.show();
+
+        buttonMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogEndGame.dismiss();
+                recreate();
+            }
+        });
+    }
 
     @Override
     protected void onDestroy() {
@@ -608,36 +615,47 @@ public class GameActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-
-        dialog = new AlertDialog.Builder(this);
-
-        dialog.setTitle("Exit");
-        dialog.setMessage("Deseja realmente sair?");
-        dialog.setCancelable(false);
-        dialog.setIcon(android.R.drawable.ic_delete);
-        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                exit = false;
-            }
-        });
-        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                exit = true;
-            }
-        });
-
-        dialog.create();
-        dialog.show();
-
-        if(exit) {
-            Intent intent = new Intent(GameActivity.this, MainActivity.class);
-            startActivity(intent);
-        }
-
         super.onBackPressed();
+    }
 
+    public void startStopTimer(){
+        if(timerRunning){
+            stopTimer();
+        }else{
+            startTimer();
+        }
+    }
+
+    public void startTimer(){
+        countDownTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
+            @Override
+            public void onTick(long l) {
+                timeLeftInMilliseconds = l;
+                updateTimer();
+            }
+
+            @Override
+            public void onFinish() {
+                stopTimer();
+                ShowGameOverPopUp();
+            }
+        }.start();
+        timerRunning=true;
+    }
+
+    public void stopTimer(){
+        countDownTimer.cancel();
+        timerRunning = false;
+    }
+
+    public void updateTimer(){
+        int seconds = (int) timeLeftInMilliseconds % 60000/ 1000;
+
+        String timeLeftText;
+
+        timeLeftText = "" + seconds;
+
+        textViewTime.setText(timeLeftText);
     }
 }
 

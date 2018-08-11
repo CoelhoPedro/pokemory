@@ -2,5 +2,6 @@
     <string name="app_name">Pokemory</string>
     <string name="score">Pontuação</string>
     <string name="tries">Tentativas</string>
+    <string name="time">Tempo</string>
     <string name="newGame">Novo jogo</string>
 </resources>

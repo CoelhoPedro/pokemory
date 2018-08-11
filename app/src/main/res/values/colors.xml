@@ -5,6 +5,10 @@
     <color name="colorAccent">#fff</color>
     <color name="buttonBlue">#3c5aa6</color>
     <color name="buttonText">#ffcb05</color>
+    <color name="buttonGreen">#4caf50</color>
+    <color name="buttonYellow">#ffee58</color>
+    <color name="buttonRed">#e53935</color>
+
 
 
 </resources>

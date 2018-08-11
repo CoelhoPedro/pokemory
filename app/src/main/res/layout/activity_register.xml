@@ -23,6 +23,7 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginBottom="20dp"
                 android:text="Registro"
+                android:textColor="@color/buttonBlue"
                 android:textSize="30dp"
                 android:gravity="center"/>
 
@@ -37,6 +38,7 @@
                 android:padding="8dp"
                 android:hint="Nome"
                 android:textColorHint="@color/buttonBlue"
+                android:textColor="@color/buttonBlue"
                 android:maxLines="1"
                 android:drawableLeft="@drawable/ic_person_blue"
                 android:layout_marginTop="70dp"/>
@@ -56,6 +58,7 @@
                 android:padding="8dp"
                 android:hint="email"
                 android:textColorHint="@color/buttonBlue"
+                android:textColor="@color/buttonBlue"
                 android:maxLines="1"
                 android:background="@android:color/transparent"
                 android:layout_marginTop="4dp"
@@ -75,6 +78,7 @@
                 android:drawablePadding="12dp"
                 android:padding="8dp"
                 android:hint="......."
+                android:textColor="@color/buttonBlue"
                 android:textColorHint="@color/buttonBlue"
                 android:maxLines="1"
                 android:background="@android:color/transparent"
