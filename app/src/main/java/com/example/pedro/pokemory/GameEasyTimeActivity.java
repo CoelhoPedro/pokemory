@@ -616,41 +616,6 @@ public class GameEasyTimeActivity extends Activity {
         super.onRestart();
     }
 
-    @Override
-    public void onBackPressed() {
-
-        AlertDialog.Builder dialog;
-
-        dialog = new AlertDialog.Builder(this);
-
-        dialog.setTitle("Exit");
-        dialog.setMessage("Deseja realmente sair?");
-        dialog.setCancelable(false);
-        dialog.setIcon(android.R.drawable.ic_delete);
-        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                exit = false;
-
-            }
-        });
-        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                exit = true;
-                Intent intent = new Intent(GameEasyTimeActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        dialog.create();
-        dialog.show();
-
-        if(exit) {
-            super.onBackPressed();
-        }
-    }
-
     public void startStopTimer(){
         if(timerRunning){
             stopTimer();
@@ -689,6 +654,38 @@ public class GameEasyTimeActivity extends Activity {
         timeLeftText = "" + seconds;
 
         textViewTime.setText(timeLeftText);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Button buttonYes, buttonNo;
+
+        stopTimer();
+
+        DialogEndGame.setContentView(R.layout.exit_popup);
+
+        buttonYes = DialogEndGame.findViewById(R.id.ButtonYesId);
+        buttonNo = DialogEndGame.findViewById(R.id.ButtonNoId);
+
+        DialogEndGame.setCanceledOnTouchOutside(false);
+        DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        DialogEndGame.show();
+
+        buttonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogEndGame.dismiss();
+                startTimer();
+            }
+        });
     }
 }
 

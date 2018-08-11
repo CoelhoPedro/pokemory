@@ -17,7 +17,7 @@
         android:layout_alignParentStart="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -47,7 +47,7 @@
 
                     <Button
                         android:id="@+id/ButtonNormalGameId"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="Normal "
                         android:padding="15dp"

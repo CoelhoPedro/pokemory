@@ -1576,44 +1576,36 @@ public class GameHardActivity extends Activity {
         if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
             mediaPlayer.start();
         }
-
         super.onRestart();
-
     }
 
     @Override
     public void onBackPressed() {
 
-        AlertDialog.Builder dialog;
+        Button buttonYes, buttonNo;
 
-        dialog = new AlertDialog.Builder(this);
+        DialogEndGame.setContentView(R.layout.exit_popup);
 
-        dialog.setTitle("Exit");
-        dialog.setMessage("Deseja realmente sair?");
-        dialog.setCancelable(false);
-        dialog.setIcon(android.R.drawable.ic_delete);
-        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+        buttonYes = DialogEndGame.findViewById(R.id.ButtonYesId);
+        buttonNo = DialogEndGame.findViewById(R.id.ButtonNoId);
+
+        DialogEndGame.setCanceledOnTouchOutside(false);
+        DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        DialogEndGame.show();
+
+        buttonYes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                exit = false;
-            }
-        });
-        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                exit = true;
-                Intent intent = new Intent(GameHardActivity.this, MainActivity.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                finish();
             }
         });
 
-        dialog.create();
-        dialog.show();
-
-        if(exit) {
-            super.onBackPressed();
-        }
-
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogEndGame.dismiss();
+            }
+        });
     }
 
 }
