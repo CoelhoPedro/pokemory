@@ -36,7 +36,6 @@ public class GameActivity extends Activity {
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
     private SharedPreferences preferences;
-    private AlertDialog.Builder dialog;
     Dialog DialogEndGame;
     long startTime = System.currentTimeMillis();
     private boolean exit;
@@ -609,6 +608,8 @@ public class GameActivity extends Activity {
     @Override
     public void onBackPressed() {
 
+        AlertDialog.Builder dialog;
+
         dialog = new AlertDialog.Builder(this);
 
         dialog.setTitle("Exit");
@@ -625,6 +626,8 @@ public class GameActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 exit = true;
+                Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -632,11 +635,8 @@ public class GameActivity extends Activity {
         dialog.show();
 
         if(exit) {
-            Intent intent = new Intent(GameActivity.this, MainActivity.class);
-            startActivity(intent);
+            super.onBackPressed();
         }
-
-        super.onBackPressed();
 
     }
 }

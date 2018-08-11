@@ -1,7 +1,9 @@
 package com.example.pedro.pokemory;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -40,6 +42,7 @@ public class GameHardActivity extends Activity {
     private String lastBooleanClicked;
     Dialog DialogEndGame;
     long startTime = System.currentTimeMillis();
+    private boolean exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1575,6 +1578,41 @@ public class GameHardActivity extends Activity {
         }
 
         super.onRestart();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder dialog;
+
+        dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle("Exit");
+        dialog.setMessage("Deseja realmente sair?");
+        dialog.setCancelable(false);
+        dialog.setIcon(android.R.drawable.ic_delete);
+        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exit = false;
+            }
+        });
+        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exit = true;
+                Intent intent = new Intent(GameHardActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        dialog.create();
+        dialog.show();
+
+        if(exit) {
+            super.onBackPressed();
+        }
 
     }
 
