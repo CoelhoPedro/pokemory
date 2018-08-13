@@ -1,5 +1,6 @@
 package com.example.pedro.pokemory;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -12,20 +13,20 @@ import java.util.List;
 
 public class RankingActivity extends AppCompatActivity {
 
-    private List<RankItem> itens;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
+        SQLiteDatabase bancoDados = openOrCreateDatabase("pokemory", MODE_PRIVATE, null);
         Database database = new Database();
-        database.createDatabase();
-        itens = database.returnData();
+        database.createDatabase(bancoDados);
 
-        List<RankItem> list = itens;
+        List<RankItem> itens = database.returnData(bancoDados);
+
+        List<RankItem> list = getRanking();
         ListView listRanking = findViewById(R.id.listViewRanking);
-        RankAdapter adapter = new RankAdapter(list, this);
+        RankAdapter adapter = new RankAdapter(itens, this);
         listRanking.setAdapter(adapter);
 
     }
@@ -34,5 +35,6 @@ public class RankingActivity extends AppCompatActivity {
         return new ArrayList<>(Arrays.asList(
                 new RankItem("Cappelli", "777"),
                 new RankItem("Pedro", "500")));
+
     }
 }

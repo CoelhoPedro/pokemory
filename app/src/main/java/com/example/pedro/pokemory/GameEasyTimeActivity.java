@@ -564,9 +564,12 @@ public class GameEasyTimeActivity extends Activity {
         DialogEndGame.setContentView(R.layout.end_game_over_popup);
         Button buttonMenu = DialogEndGame.findViewById(R.id.ButtonBackId);
         Button buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
+        Button buttonSave = DialogEndGame.findViewById(R.id.saveButton);
 
         DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DialogEndGame.show();
+
+
 
         buttonMenu.setOnClickListener(new View.OnClickListener() {
             @Override

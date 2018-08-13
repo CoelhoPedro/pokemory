@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Database {
 
-    private SQLiteDatabase bancoDados;
     private ArrayList<Integer> ids;
     private ArrayList<String> names;
     private ArrayList<Integer> scores;
@@ -17,7 +16,7 @@ public class Database {
 
     }
 
-    public void createDatabase () {
+    public void createDatabase (SQLiteDatabase bancoDados) {
 
         try {
 
@@ -29,7 +28,7 @@ public class Database {
 
     }
 
-    public void saveToDatabase (String name, int score) {
+    public void saveToDatabase (SQLiteDatabase bancoDados, String name, int score) {
 
         try {
 
@@ -47,7 +46,7 @@ public class Database {
 
     }
 
-    public List<RankItem> returnData() {
+    public List<RankItem> returnData(SQLiteDatabase bancoDados) {
 
         try {
 

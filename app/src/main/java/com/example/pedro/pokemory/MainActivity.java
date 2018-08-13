@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SQLiteDatabase bancoDados = openOrCreateDatabase("pokemory", MODE_PRIVATE, null);
+        Database database = new Database();
+        database.createDatabase(bancoDados);
 
         dialogLogout = new Dialog(this);
         dialogGameSelection = new Dialog(this);

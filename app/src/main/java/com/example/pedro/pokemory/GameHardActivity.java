@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import java.util.Random;
 public class GameHardActivity extends Activity {
 
     private TextView textViewScore, textViewTries;
+    private EditText textName;
     public MediaPlayer mediaPlayer, mediaPlayer2;
     public ImageView ImageView_1,imageView_2,imageView_3,imageView_4,imageView_5,imageView_6,
             imageView_7,imageView_8,imageView_9,imageView_10,imageView_11,imageView_12,imageView_13,
@@ -1527,6 +1530,9 @@ public class GameHardActivity extends Activity {
         Button buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
         textViewPointsEndGame = DialogEndGame.findViewById(R.id.textViewPoints);
         textViewTitle = DialogEndGame.findViewById(R.id.textViewTitle);
+        Button buttonSave = DialogEndGame.findViewById(R.id.saveButton);
+        textName = DialogEndGame.findViewById(R.id.EditTextSaveName);
+
 
         checkSoundStatus("endGame");
 
@@ -1536,6 +1542,16 @@ public class GameHardActivity extends Activity {
         DialogEndGame.show();
 
         textViewTitle.setText(textTitle);
+
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SQLiteDatabase bancoDados = openOrCreateDatabase("pokemory", MODE_PRIVATE, null);
+                Database database = new Database();
+                database.createDatabase(bancoDados);
+                database.saveToDatabase(bancoDados, textName.getText().toString(), playerScore);;
+            }
+        });
 
         buttonMenu.setOnClickListener(new View.OnClickListener() {
             @Override

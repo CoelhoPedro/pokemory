@@ -557,6 +557,7 @@ public class GameActivity extends Activity {
         textViewPointsEndGame = DialogEndGame.findViewById(R.id.textViewPoints);
         textViewTitle = DialogEndGame.findViewById(R.id.textViewTitle);
         textName = DialogEndGame.findViewById(R.id.EditTextSaveName);
+        Button buttonSave = DialogEndGame.findViewById(R.id.saveButton);
 
         checkSoundStatus("endGame");
 
@@ -566,12 +567,19 @@ public class GameActivity extends Activity {
         DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DialogEndGame.show();
 
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SQLiteDatabase bancoDados = openOrCreateDatabase("pokemory", MODE_PRIVATE, null);
+                Database database = new Database();
+                database.createDatabase(bancoDados);
+                database.saveToDatabase(bancoDados, textName.getText().toString(), playerScore);;
+            }
+        });
+
         buttonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Database database = new Database();
-                database.createDatabase();
-                database.saveToDatabase(textName.getText().toString(), playerScore);;
                 finish();
             }
         });
@@ -579,9 +587,6 @@ public class GameActivity extends Activity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Database database = new Database();
-                database.createDatabase();
-                database.saveToDatabase(textName.getText().toString(), playerScore);
                 DialogEndGame.dismiss();
                 recreate();
             }
