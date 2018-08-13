@@ -25,7 +25,7 @@ import java.util.Random;
 public class GameActivity extends Activity {
 
     private TextView textViewScore, textViewTries;
-    public MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer,mediaPlayer2;
     public ImageView ImageView_1, imageView_2, imageView_3, imageView_4, imageView_5, imageView_6,
             imageView_7, imageView_8, imageView_9, imageView_10, imageView_11, imageView_12,
             lastImageViewClicked;
@@ -35,10 +35,8 @@ public class GameActivity extends Activity {
     private int imageValueFlipped, playerScore = 0, playerTries = 0, cardsFlipped = 0, cardsUp = 6;
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
-    private SharedPreferences preferences;
     Dialog DialogEndGame;
     long startTime = System.currentTimeMillis();
-    private boolean exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +45,9 @@ public class GameActivity extends Activity {
         setContentView(R.layout.activity_game_easy_normal);
         cardsUp = 6;
         DialogEndGame = new Dialog(this);
+
+        Bundle extra = getIntent().getExtras();
+        final String text = extra.getString("som");
 
         checkSoundStatus("inGame");
 
@@ -67,7 +68,7 @@ public class GameActivity extends Activity {
                             boolean1 = flipTheCard(imageValue, ImageView_1, "boolean1");
                         } else {
                             int imageValue = matriz[0][0];
-                            boolean1 = compareCards(imageValue, ImageView_1);
+                            boolean1 = compareCards(imageValue, ImageView_1,text);
                         }
                     }
                 }
@@ -84,7 +85,7 @@ public class GameActivity extends Activity {
                             boolean2 = flipTheCard(imageValue, imageView_2, "boolean2");
                         } else {
                             int imageValue = matriz[0][1];
-                            boolean2 = compareCards(imageValue, imageView_2);
+                            boolean2 = compareCards(imageValue, imageView_2,text);
                         }
                     }
                 }
@@ -101,7 +102,7 @@ public class GameActivity extends Activity {
                             boolean3 = flipTheCard(imageValue, imageView_3, "boolean3");
                         } else {
                             int imageValue = matriz[0][2];
-                            boolean3 = compareCards(imageValue, imageView_3);
+                            boolean3 = compareCards(imageValue, imageView_3,text);
                         }
                     }
                 }
@@ -117,7 +118,7 @@ public class GameActivity extends Activity {
                             boolean4 = flipTheCard(imageValue, imageView_4, "boolean4");
                         } else {
                             int imageValue = matriz[1][0];
-                            boolean4 = compareCards(imageValue, imageView_4);
+                            boolean4 = compareCards(imageValue, imageView_4,text);
                         }
                     }
                 }
@@ -133,7 +134,7 @@ public class GameActivity extends Activity {
                             boolean5 = flipTheCard(imageValue, imageView_5, "boolean5");
                         } else {
                             int imageValue = matriz[1][1];
-                            boolean5 = compareCards(imageValue, imageView_5);
+                            boolean5 = compareCards(imageValue, imageView_5,text);
                         }
                     }
                 }
@@ -149,7 +150,7 @@ public class GameActivity extends Activity {
                             boolean6 = flipTheCard(imageValue, imageView_6, "boolean6");
                         } else {
                             int imageValue = matriz[1][2];
-                            boolean6 = compareCards(imageValue, imageView_6);
+                            boolean6 = compareCards(imageValue, imageView_6,text);
                         }
                     }
                 }
@@ -165,7 +166,7 @@ public class GameActivity extends Activity {
                             boolean7 = flipTheCard(imageValue, imageView_7, "boolean7");
                         } else {
                             int imageValue = matriz[2][0];
-                            boolean7 = compareCards(imageValue, imageView_7);
+                            boolean7 = compareCards(imageValue, imageView_7,text);
                         }
 
                     }
@@ -182,7 +183,7 @@ public class GameActivity extends Activity {
                             boolean8 = flipTheCard(imageValue, imageView_8, "boolean8");
                         } else {
                             int imageValue = matriz[2][1];
-                            boolean8 = compareCards(imageValue, imageView_8);
+                            boolean8 = compareCards(imageValue, imageView_8,text);
                         }
                     }
                 }
@@ -198,7 +199,7 @@ public class GameActivity extends Activity {
                             boolean9 = flipTheCard(imageValue, imageView_9, "boolean9");
                         } else {
                             int imageValue = matriz[2][2];
-                            boolean9 = compareCards(imageValue, imageView_9);
+                            boolean9 = compareCards(imageValue, imageView_9,text);
                         }
                     }
                 }
@@ -214,7 +215,7 @@ public class GameActivity extends Activity {
                             boolean10 = flipTheCard(imageValue, imageView_10, "boolean10");
                         } else {
                             int imageValue = matriz[3][0];
-                            boolean10 = compareCards(imageValue, imageView_10);
+                            boolean10 = compareCards(imageValue, imageView_10,text);
                         }
                     }
                 }
@@ -230,7 +231,7 @@ public class GameActivity extends Activity {
                             boolean11 = flipTheCard(imageValue, imageView_11, "boolean11");
                         } else {
                             int imageValue = matriz[3][1];
-                            boolean11 = compareCards(imageValue, imageView_11);
+                            boolean11 = compareCards(imageValue, imageView_11,text);
                         }
                     }
                 }
@@ -246,7 +247,7 @@ public class GameActivity extends Activity {
                             boolean12 = flipTheCard(imageValue, imageView_12, "boolean12");
                         } else {
                             int imageValue = matriz[3][2];
-                            boolean12 = compareCards(imageValue, imageView_12);
+                            boolean12 = compareCards(imageValue, imageView_12,text);
                         }
                     }
                 }
@@ -354,7 +355,7 @@ public class GameActivity extends Activity {
         image.setImageDrawable(getResources().getDrawable(R.drawable.cardbackground));
     }
 
-    private boolean compareCards(int imageValuePressed, final ImageView imagePressed) {
+    private boolean compareCards(int imageValuePressed, final ImageView imagePressed, String statusMusica) {
 
         playerTries++;
         String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
@@ -363,7 +364,7 @@ public class GameActivity extends Activity {
         if (imageValuePressed == imageValueFlipped) {
             cardsUp--;
             cardsFlipped = 2;
-            playCardSound("correct");
+            playMusic("correct", statusMusica);
             sumPoint();
             flipped = false;
             setImage(imageValuePressed, imagePressed);
@@ -378,7 +379,7 @@ public class GameActivity extends Activity {
             return true;
         } else {
             flipped = false;
-            playCardSound("wrong");
+            playMusic("wrong", statusMusica);
             setImage(imageValuePressed, imagePressed);
             cardsFlipped = 2;
             resetLastBooleanClicked(lastBooleanClicked);
@@ -501,41 +502,43 @@ public class GameActivity extends Activity {
         if (extra != null) {
             if (text.equals("ativado")) {
                 if(typeMusic.equalsIgnoreCase("inGame")){
-                    playMusic("inGame");
+                    playMusic("inGame","ativado");
                 }else{
-                    playMusic("endGame");
+                    playMusic("endGame","ativado");
                 }
             }
         }
     }
 
-    public void playMusic(String typeMusic) {
+    public void playMusic(String typeMusic, String statusMusica) {
 
         switch (typeMusic) {
+
             case "inGame":
                 mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.ingamemusic);
                 mediaPlayer.start();
                 mediaPlayer.setLooping(true);
                 break;
-//          A ARRUMAR
-          case "endGame":
-              mediaPlayer.stop();
-              mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.endgamemusic);
-              mediaPlayer.start();
-              break;
-        }
-    }
 
-    public void playCardSound(String soundType) {
-
-        switch (soundType) {
-            case "correct":
-                MediaPlayer soundCorrect = MediaPlayer.create(this, R.raw.correctsound);
-                soundCorrect.start();
+            case "endGame":
+                mediaPlayer.stop();
+                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.endgamemusic);
+                mediaPlayer.start();
                 break;
+
             case "wrong":
-                MediaPlayer soundWrong = MediaPlayer.create(this, R.raw.failedsound);
-                soundWrong.start();
+                if(statusMusica.equalsIgnoreCase("ativado")){
+                    mediaPlayer2 = MediaPlayer.create(this, R.raw.failedsound);
+                    mediaPlayer2.start();
+                }
+                break;
+
+            case "correct":
+                if(statusMusica.equalsIgnoreCase("ativado")){
+                    mediaPlayer2 = MediaPlayer.create(this, R.raw.correctsound);
+                    mediaPlayer2.start();
+                }
+                break;
         }
     }
 
