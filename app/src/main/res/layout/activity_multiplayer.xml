@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/new_login_gradients"
+    tools:context=".MultiplayerActivity">
+
+
+    <ImageView
+        android:id="@+id/imageViewPokemoryMP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/pokemory_multiplayer_logo" />
+
+    <TextView
+        android:id="@+id/textViewNick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nickname"
+        android:layout_centerVertical="true"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextNickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewNick"
+        android:ems="10"
+        android:inputType="none" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNickname"
+        android:text="Clique em cima do seu nickname para alterá-lo."
+        android:textColor="#df0101"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/buttonNewMPGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttonLogoff"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/background_button"
+        android:text="Começar novo jogo"
+        android:textColor="@color/buttonText" />
+
+    <Button
+        android:id="@+id/buttonLogoff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/background_button"
+        android:text="@string/logoff"
+        android:textColor="@color/buttonText" />
+
+
+</RelativeLayout>

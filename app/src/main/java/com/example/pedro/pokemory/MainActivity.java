@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private FirebaseAuth firebaseAuth;
     private Dialog dialogLogout, dialogGameSelection;
+    private static final String ARQUIVO_PREFERENCIA = "settings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         dialogLogout = new Dialog(this);
         dialogGameSelection = new Dialog(this);
 
-        preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences(ARQUIVO_PREFERENCIA, Context.MODE_PRIVATE);
 
         buttonNewGame = findViewById(R.id.buttonNewGame);
         buttonRanking = findViewById(R.id.buttonRanking);
