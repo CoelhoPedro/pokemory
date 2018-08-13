@@ -16,15 +16,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
+import java.util.Set;
 
 public class GameActivity extends Activity {
 
     private TextView textViewScore, textViewTries;
+    private EditText textName;
     public MediaPlayer mediaPlayer;
     public ImageView ImageView_1, imageView_2, imageView_3, imageView_4, imageView_5, imageView_6,
             imageView_7, imageView_8, imageView_9, imageView_10, imageView_11, imageView_12,
@@ -36,13 +39,17 @@ public class GameActivity extends Activity {
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
     private SharedPreferences preferences;
+    private static final String ARQUIVO_PREFERENCIA = "settings";
     Dialog DialogEndGame;
     long startTime = System.currentTimeMillis();
     private boolean exit;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        preferences = getSharedPreferences(ARQUIVO_PREFERENCIA, Context.MODE_PRIVATE);
 
         setContentView(R.layout.activity_game_easy_normal);
         cardsUp = 6;
@@ -548,6 +555,7 @@ public class GameActivity extends Activity {
         Button buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
         textViewPointsEndGame = DialogEndGame.findViewById(R.id.textViewPoints);
         textViewTitle = DialogEndGame.findViewById(R.id.textViewTitle);
+        textName = DialogEndGame.findViewById(R.id.EditTextSaveName);
 
         checkSoundStatus("endGame");
 
@@ -560,6 +568,9 @@ public class GameActivity extends Activity {
         buttonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Database database = new Database();
+                database.createDatabase();
+                database.saveToDatabase(textName.getText().toString(), playerScore);;
                 finish();
             }
         });
@@ -567,6 +578,9 @@ public class GameActivity extends Activity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Database database = new Database();
+                database.createDatabase();
+                database.saveToDatabase(textName.getText().toString(), playerScore);
                 DialogEndGame.dismiss();
                 recreate();
             }
@@ -607,30 +621,36 @@ public class GameActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-        Button buttonYes, buttonNo;
+        AlertDialog.Builder dialog;
 
-        DialogEndGame.setContentView(R.layout.exit_popup);
+        dialog = new AlertDialog.Builder(this);
 
-        buttonYes = DialogEndGame.findViewById(R.id.ButtonYesId);
-        buttonNo = DialogEndGame.findViewById(R.id.ButtonNoId);
-
-        DialogEndGame.setCanceledOnTouchOutside(false);
-        DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-        DialogEndGame.show();
-
-        buttonYes.setOnClickListener(new View.OnClickListener() {
+        dialog.setTitle("Exit");
+        dialog.setMessage("Deseja realmente sair?");
+        dialog.setCancelable(false);
+        dialog.setIcon(android.R.drawable.ic_delete);
+        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exit = false;
+            }
+        });
+        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exit = true;
+                Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
-        buttonNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogEndGame.dismiss();
-            }
-        });
+        dialog.create();
+        dialog.show();
+
+        if(exit) {
+            super.onBackPressed();
+        }
+
     }
 }
 

@@ -23,7 +23,7 @@ import java.util.Random;
 public class GameHardTimeActivity extends Activity {
 
     private TextView textViewTime;
-    public MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer, mediaPlayer2;
     public ImageView ImageView_1,imageView_2,imageView_3,imageView_4,imageView_5,imageView_6,
             imageView_7,imageView_8,imageView_9,imageView_10,imageView_11,imageView_12,imageView_13,
             imageView_14,imageView_15,imageView_16,imageView_17,imageView_18,imageView_19,imageView_20,
@@ -38,13 +38,12 @@ public class GameHardTimeActivity extends Activity {
             boolean29,boolean30,boolean31,boolean32,boolean33,boolean34,boolean35,boolean36,boolean37,boolean38,
             boolean39,boolean40,boolean41,boolean42,boolean43,boolean44,boolean45,boolean46,boolean47,boolean48,
             flipped = false,timerRunning= false;
-    private int imageValueFlipped, playerTries = 0, cardsFlipped = 0, cardsUp = 24;
+    private int imageValueFlipped, cardsFlipped = 0, cardsUp = 24;
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
     Dialog DialogEndGame;
     private long timeLeftInMilliseconds = 300000; // 1 minuto;
     private CountDownTimer countDownTimer;
-    private boolean exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +54,8 @@ public class GameHardTimeActivity extends Activity {
         checkSoundStatus("inGame");
         setViews();
         startStopTimer();
+        Bundle extra = getIntent().getExtras();
+        final String text = extra.getString("som");
 
         matriz = sorteiaPecas();
 
@@ -68,7 +69,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean1 = flipTheCard(imageValue, ImageView_1, "boolean1");
                         } else {
                             int imageValue = matriz[0][0];
-                            boolean1 = compareCards(imageValue, ImageView_1);
+                            boolean1 = compareCards(imageValue, ImageView_1,text);
                         }
                     }
                 }
@@ -85,7 +86,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean2 = flipTheCard(imageValue, imageView_2, "boolean2");
                         } else {
                             int imageValue = matriz[0][1];
-                            boolean2 = compareCards(imageValue, imageView_2);
+                            boolean2 = compareCards(imageValue, imageView_2,text);
                         }
                     }
                 }
@@ -102,7 +103,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean3 = flipTheCard(imageValue, imageView_3, "boolean3");
                         } else {
                             int imageValue = matriz[0][2];
-                            boolean3 = compareCards(imageValue, imageView_3);
+                            boolean3 = compareCards(imageValue, imageView_3,text);
                         }
                     }
                 }
@@ -118,7 +119,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean4 = flipTheCard(imageValue, imageView_4, "boolean4");
                         } else {
                             int imageValue = matriz[0][3];
-                            boolean4 = compareCards(imageValue, imageView_4);
+                            boolean4 = compareCards(imageValue, imageView_4,text);
                         }
                     }
                 }
@@ -134,7 +135,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean5 = flipTheCard(imageValue, imageView_5, "boolean5");
                         } else {
                             int imageValue = matriz[0][4];
-                            boolean5 = compareCards(imageValue, imageView_5);
+                            boolean5 = compareCards(imageValue, imageView_5,text);
                         }
                     }
                 }
@@ -150,7 +151,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean6 = flipTheCard(imageValue, imageView_6, "boolean6");
                         } else {
                             int imageValue = matriz[0][5];
-                            boolean6 = compareCards(imageValue, imageView_6);
+                            boolean6 = compareCards(imageValue, imageView_6,text);
                         }
                     }
                 }
@@ -166,7 +167,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean7 = flipTheCard(imageValue, imageView_7, "boolean7");
                         } else {
                             int imageValue = matriz[1][0];
-                            boolean7 = compareCards(imageValue, imageView_7);
+                            boolean7 = compareCards(imageValue, imageView_7,text);
                         }
 
                     }
@@ -183,7 +184,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean8 = flipTheCard(imageValue, imageView_8, "boolean8");
                         } else {
                             int imageValue = matriz[1][1];
-                            boolean8 = compareCards(imageValue, imageView_8);
+                            boolean8 = compareCards(imageValue, imageView_8,text);
                         }
                     }
                 }
@@ -199,7 +200,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean9 = flipTheCard(imageValue, imageView_9, "boolean9");
                         } else {
                             int imageValue = matriz[1][2];
-                            boolean9 = compareCards(imageValue, imageView_9);
+                            boolean9 = compareCards(imageValue, imageView_9,text);
                         }
                     }
                 }
@@ -215,7 +216,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean10 = flipTheCard(imageValue, imageView_10, "boolean10");
                         } else {
                             int imageValue = matriz[1][3];
-                            boolean10 = compareCards(imageValue, imageView_10);
+                            boolean10 = compareCards(imageValue, imageView_10,text);
                         }
                     }
                 }
@@ -231,7 +232,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean11 = flipTheCard(imageValue, imageView_11, "boolean11");
                         } else {
                             int imageValue = matriz[1][4];
-                            boolean11 = compareCards(imageValue, imageView_11);
+                            boolean11 = compareCards(imageValue, imageView_11,text);
                         }
                     }
                 }
@@ -247,7 +248,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean12 = flipTheCard(imageValue, imageView_12, "boolean12");
                         } else {
                             int imageValue = matriz[1][5];
-                            boolean12 = compareCards(imageValue, imageView_12);
+                            boolean12 = compareCards(imageValue, imageView_12,text);
                         }
                     }
                 }
@@ -264,7 +265,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean13 = flipTheCard(imageValue, imageView_13, "boolean13");
                         } else {
                             int imageValue = matriz[2][0];
-                            boolean13 = compareCards(imageValue, imageView_13);
+                            boolean13 = compareCards(imageValue, imageView_13,text);
                         }
                     }
                 }
@@ -281,7 +282,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean14 = flipTheCard(imageValue, imageView_14, "boolean14");
                         } else {
                             int imageValue = matriz[2][1];
-                            boolean14 = compareCards(imageValue, imageView_14);
+                            boolean14 = compareCards(imageValue, imageView_14,text);
                         }
                     }
                 }
@@ -298,7 +299,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean15 = flipTheCard(imageValue, imageView_15, "boolean15");
                         } else {
                             int imageValue = matriz[2][2];
-                            boolean15 = compareCards(imageValue, imageView_15);
+                            boolean15 = compareCards(imageValue, imageView_15,text);
                         }
                     }
                 }
@@ -315,7 +316,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean16 = flipTheCard(imageValue, imageView_16, "boolean16");
                         } else {
                             int imageValue = matriz[2][3];
-                            boolean16 = compareCards(imageValue, imageView_16);
+                            boolean16 = compareCards(imageValue, imageView_16,text);
                         }
                     }
                 }
@@ -332,7 +333,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean17 = flipTheCard(imageValue, imageView_17, "boolean17");
                         } else {
                             int imageValue = matriz[2][4];
-                            boolean17 = compareCards(imageValue, imageView_17);
+                            boolean17 = compareCards(imageValue, imageView_17,text);
                         }
                     }
                 }
@@ -349,7 +350,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean18 = flipTheCard(imageValue, imageView_18, "boolean18");
                         } else {
                             int imageValue = matriz[2][5];
-                            boolean18 = compareCards(imageValue, imageView_18);
+                            boolean18 = compareCards(imageValue, imageView_18,text);
                         }
                     }
                 }
@@ -366,7 +367,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean19 = flipTheCard(imageValue, imageView_19, "boolean19");
                         } else {
                             int imageValue = matriz[3][0];
-                            boolean19 = compareCards(imageValue, imageView_19);
+                            boolean19 = compareCards(imageValue, imageView_19,text);
                         }
                     }
                 }
@@ -383,7 +384,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean20 = flipTheCard(imageValue, imageView_20, "boolean20");
                         } else {
                             int imageValue = matriz[3][1];
-                            boolean20 = compareCards(imageValue, imageView_20);
+                            boolean20 = compareCards(imageValue, imageView_20,text);
                         }
                     }
                 }
@@ -400,7 +401,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean21 = flipTheCard(imageValue, imageView_21, "boolean21");
                         } else {
                             int imageValue = matriz[3][2];
-                            boolean21 = compareCards(imageValue, imageView_21);
+                            boolean21 = compareCards(imageValue, imageView_21,text);
                         }
                     }
                 }
@@ -417,7 +418,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean22 = flipTheCard(imageValue, imageView_22, "boolean22");
                         } else {
                             int imageValue = matriz[3][3];
-                            boolean22 = compareCards(imageValue, imageView_22);
+                            boolean22 = compareCards(imageValue, imageView_22,text);
                         }
                     }
                 }
@@ -434,7 +435,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean23 = flipTheCard(imageValue, imageView_23, "boolean23");
                         } else {
                             int imageValue = matriz[3][4];
-                            boolean23 = compareCards(imageValue, imageView_23);
+                            boolean23 = compareCards(imageValue, imageView_23,text);
                         }
                     }
                 }
@@ -451,7 +452,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean24 = flipTheCard(imageValue, imageView_24, "boolean24");
                         } else {
                             int imageValue = matriz[3][5];
-                            boolean24 = compareCards(imageValue, imageView_24);
+                            boolean24 = compareCards(imageValue, imageView_24,text);
                         }
                     }
                 }
@@ -468,7 +469,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean25 = flipTheCard(imageValue, imageView_25, "boolean25");
                         } else {
                             int imageValue = matriz[4][0];
-                            boolean25 = compareCards(imageValue, imageView_25);
+                            boolean25 = compareCards(imageValue, imageView_25,text);
                         }
                     }
                 }
@@ -485,7 +486,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean26 = flipTheCard(imageValue, imageView_26, "boolean26");
                         } else {
                             int imageValue = matriz[4][1];
-                            boolean26 = compareCards(imageValue, imageView_26);
+                            boolean26 = compareCards(imageValue, imageView_26,text);
                         }
                     }
                 }
@@ -501,7 +502,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean27 = flipTheCard(imageValue, imageView_27, "boolean27");
                         } else {
                             int imageValue = matriz[4][2];
-                            boolean27 = compareCards(imageValue, imageView_27);
+                            boolean27 = compareCards(imageValue, imageView_27,text);
                         }
                     }
                 }
@@ -518,7 +519,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean28 = flipTheCard(imageValue, imageView_28, "boolean28");
                         } else {
                             int imageValue = matriz[4][3];
-                            boolean28 = compareCards(imageValue, imageView_28);
+                            boolean28 = compareCards(imageValue, imageView_28,text);
                         }
                     }
                 }
@@ -535,7 +536,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean29 = flipTheCard(imageValue, imageView_29, "boolean29");
                         } else {
                             int imageValue = matriz[4][4];
-                            boolean29 = compareCards(imageValue, imageView_29);
+                            boolean29 = compareCards(imageValue, imageView_29,text);
                         }
                     }
                 }
@@ -552,7 +553,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean30 = flipTheCard(imageValue, imageView_30, "boolean30");
                         } else {
                             int imageValue = matriz[4][5];
-                            boolean30 = compareCards(imageValue, imageView_30);
+                            boolean30 = compareCards(imageValue, imageView_30,text);
                         }
                     }
                 }
@@ -569,7 +570,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean31 = flipTheCard(imageValue, imageView_31, "boolean31");
                         } else {
                             int imageValue = matriz[5][0];
-                            boolean31 = compareCards(imageValue, imageView_31);
+                            boolean31 = compareCards(imageValue, imageView_31,text);
                         }
                     }
                 }
@@ -586,7 +587,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean32 = flipTheCard(imageValue, imageView_32, "boolean32");
                         } else {
                             int imageValue = matriz[5][1];
-                            boolean32 = compareCards(imageValue, imageView_32);
+                            boolean32 = compareCards(imageValue, imageView_32,text);
                         }
                     }
                 }
@@ -602,7 +603,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean33 = flipTheCard(imageValue, imageView_33, "boolean33");
                         } else {
                             int imageValue = matriz[5][2];
-                            boolean33 = compareCards(imageValue, imageView_33);
+                            boolean33 = compareCards(imageValue, imageView_33,text);
                         }
                     }
                 }
@@ -619,7 +620,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean34 = flipTheCard(imageValue, imageView_34, "boolean34");
                         } else {
                             int imageValue = matriz[5][3];
-                            boolean34 = compareCards(imageValue, imageView_34);
+                            boolean34 = compareCards(imageValue, imageView_34,text);
                         }
                     }
                 }
@@ -636,7 +637,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean35 = flipTheCard(imageValue, imageView_35, "boolean35");
                         } else {
                             int imageValue = matriz[5][4];
-                            boolean35 = compareCards(imageValue, imageView_35);
+                            boolean35 = compareCards(imageValue, imageView_35,text);
                         }
                     }
                 }
@@ -653,7 +654,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean36 = flipTheCard(imageValue, imageView_36, "boolean36");
                         } else {
                             int imageValue = matriz[5][5];
-                            boolean36 = compareCards(imageValue, imageView_36);
+                            boolean36 = compareCards(imageValue, imageView_36,text);
                         }
                     }
                 }
@@ -670,7 +671,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean37 = flipTheCard(imageValue, imageView_37, "boolean37");
                         } else {
                             int imageValue = matriz[6][0];
-                            boolean37 = compareCards(imageValue, imageView_37);
+                            boolean37 = compareCards(imageValue, imageView_37,text);
                         }
                     }
                 }
@@ -687,7 +688,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean38 = flipTheCard(imageValue, imageView_38, "boolean38");
                         } else {
                             int imageValue = matriz[6][1];
-                            boolean38 = compareCards(imageValue, imageView_38);
+                            boolean38 = compareCards(imageValue, imageView_38,text);
                         }
                     }
                 }
@@ -704,7 +705,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean39 = flipTheCard(imageValue, imageView_39, "boolean39");
                         } else {
                             int imageValue = matriz[6][2];
-                            boolean39 = compareCards(imageValue, imageView_39);
+                            boolean39 = compareCards(imageValue, imageView_39,text);
                         }
                     }
                 }
@@ -721,7 +722,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean40 = flipTheCard(imageValue, imageView_40, "boolean40");
                         } else {
                             int imageValue = matriz[6][3];
-                            boolean40 = compareCards(imageValue, imageView_40);
+                            boolean40 = compareCards(imageValue, imageView_40,text);
                         }
                     }
                 }
@@ -738,7 +739,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean41 = flipTheCard(imageValue, imageView_41, "boolean41");
                         } else {
                             int imageValue = matriz[6][4];
-                            boolean41 = compareCards(imageValue, imageView_41);
+                            boolean41 = compareCards(imageValue, imageView_41,text);
                         }
                     }
                 }
@@ -755,7 +756,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean42 = flipTheCard(imageValue, imageView_42, "boolean42");
                         } else {
                             int imageValue = matriz[6][5];
-                            boolean42 = compareCards(imageValue, imageView_42);
+                            boolean42 = compareCards(imageValue, imageView_42,text);
                         }
                     }
                 }
@@ -772,7 +773,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean43 = flipTheCard(imageValue, imageView_43, "boolean43");
                         } else {
                             int imageValue = matriz[7][0];
-                            boolean43 = compareCards(imageValue, imageView_43);
+                            boolean43 = compareCards(imageValue, imageView_43,text);
                         }
                     }
                 }
@@ -791,7 +792,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean44 = flipTheCard(imageValue, imageView_44, "boolean44");
                         } else {
                             int imageValue = matriz[7][1];
-                            boolean44 = compareCards(imageValue, imageView_44);
+                            boolean44 = compareCards(imageValue, imageView_44,text);
                         }
                     }
                 }
@@ -810,7 +811,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean45 = flipTheCard(imageValue, imageView_45, "boolean45");
                         } else {
                             int imageValue = matriz[7][2];
-                            boolean45 = compareCards(imageValue, imageView_45);
+                            boolean45 = compareCards(imageValue, imageView_45,text);
                         }
                     }
                 }
@@ -827,7 +828,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean46 = flipTheCard(imageValue, imageView_46, "boolean46");
                         } else {
                             int imageValue = matriz[7][3];
-                            boolean46 = compareCards(imageValue, imageView_46);
+                            boolean46 = compareCards(imageValue, imageView_46,text);
                         }
                     }
                 }
@@ -844,7 +845,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean47 = flipTheCard(imageValue, imageView_47, "boolean47");
                         } else {
                             int imageValue = matriz[7][4];
-                            boolean47 = compareCards(imageValue, imageView_47);
+                            boolean47 = compareCards(imageValue, imageView_47,text);
                         }
                     }
                 }
@@ -861,7 +862,7 @@ public class GameHardTimeActivity extends Activity {
                             boolean48 = flipTheCard(imageValue, imageView_48, "boolean48");
                         } else {
                             int imageValue = matriz[7][5];
-                            boolean48 = compareCards(imageValue, imageView_48);
+                            boolean48 = compareCards(imageValue, imageView_48,text);
                         }
                     }
                 }
@@ -1186,15 +1187,12 @@ public class GameHardTimeActivity extends Activity {
         image.setImageDrawable(getResources().getDrawable(R.drawable.cardbackground));
     }
 
-    private boolean compareCards(int imageValuePressed, final ImageView imagePressed) {
-
-        playerTries++;
-        String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
+    private boolean compareCards(int imageValuePressed, final ImageView imagePressed, String statusMusica) {
 
         if (imageValuePressed == imageValueFlipped) {
             cardsUp--;
             cardsFlipped = 2;
-            playCardSound("correct");
+            playMusic("correct", statusMusica);
             flipped = false;
             setImage(imageValuePressed, imagePressed);
             if (cardsUp == 0) {
@@ -1207,7 +1205,7 @@ public class GameHardTimeActivity extends Activity {
             return true;
         } else {
             flipped = false;
-            playCardSound("wrong");
+            playMusic("wrong", statusMusica);
             setImage(imageValuePressed, imagePressed);
             cardsFlipped = 2;
             resetLastBooleanClicked(lastBooleanClicked);
@@ -1463,15 +1461,15 @@ public class GameHardTimeActivity extends Activity {
         if (extra != null) {
             if (text.equals("ativado")) {
                 if(typeMusic.equalsIgnoreCase("inGame")){
-                    playMusic("inGame");
+                    playMusic("inGame", "ativado");
                 }else{
-                    playMusic("endGame");
+                    playMusic("endGame", "ativado");
                 }
             }
         }
     }
 
-    public void playMusic(String typeMusic) {
+    public void playMusic(String typeMusic, String statusMusica) {
 
         switch (typeMusic) {
             case "inGame":
@@ -1484,6 +1482,19 @@ public class GameHardTimeActivity extends Activity {
                 mediaPlayer.stop();
                 mediaPlayer = MediaPlayer.create(this, R.raw.endgamemusic);
                 mediaPlayer.start();
+                break;
+            case "wrong":
+                if(statusMusica.equalsIgnoreCase("ativado")){
+                    mediaPlayer2 = MediaPlayer.create(this, R.raw.failedsound);
+                    mediaPlayer2.start();
+                }
+                break;
+
+            case "correct":
+                if(statusMusica.equalsIgnoreCase("ativado")){
+                    mediaPlayer2 = MediaPlayer.create(this, R.raw.correctsound);
+                    mediaPlayer2.start();
+                }
                 break;
         }
     }
@@ -1682,5 +1693,3 @@ public class GameHardTimeActivity extends Activity {
     }
 
 }
-
-
