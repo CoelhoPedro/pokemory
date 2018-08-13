@@ -1,7 +1,5 @@
 package com.example.pedro.pokemory;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -14,7 +12,7 @@ import java.util.List;
 
 public class RankingActivity extends AppCompatActivity {
 
-    private ArrayList<RankItem> itens;
+    private List<RankItem> itens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

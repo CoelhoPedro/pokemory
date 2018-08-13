@@ -1,13 +1,9 @@
 package com.example.pedro.pokemory;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
-
+import android.database.sqlite.*;
 import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
-import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
+import java.util.List;
 
 public class Database {
 
@@ -15,7 +11,7 @@ public class Database {
     private ArrayList<Integer> ids;
     private ArrayList<String> names;
     private ArrayList<Integer> scores;
-    private ArrayList<RankItem> itens;
+    private List<RankItem> itens;
 
     public Database() {
 
@@ -25,7 +21,6 @@ public class Database {
 
         try {
 
-            bancoDados = openOrCreateDatabase("pokemory", null, null);
             bancoDados.execSQL("CREATE TABLE IF NOT EXISTS ranking(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, score INTEGER)");
 
         } catch(Exception e){
@@ -52,7 +47,7 @@ public class Database {
 
     }
 
-    public ArrayList<RankItem> returnData() {
+    public List<RankItem> returnData() {
 
         try {
 
