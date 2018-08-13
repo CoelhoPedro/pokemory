@@ -16,16 +16,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
+import java.util.Set;
 
 public class GameActivity extends Activity {
 
     private TextView textViewScore, textViewTries;
-    public MediaPlayer mediaPlayer,mediaPlayer2;
+    private EditText textName;
+    public MediaPlayer mediaPlayer;
     public ImageView ImageView_1, imageView_2, imageView_3, imageView_4, imageView_5, imageView_6,
             imageView_7, imageView_8, imageView_9, imageView_10, imageView_11, imageView_12,
             lastImageViewClicked;
@@ -35,19 +38,22 @@ public class GameActivity extends Activity {
     private int imageValueFlipped, playerScore = 0, playerTries = 0, cardsFlipped = 0, cardsUp = 6;
     private final static int DELAY_TIME = 1000;
     private String lastBooleanClicked;
+    private SharedPreferences preferences;
+    private static final String ARQUIVO_PREFERENCIA = "settings";
     Dialog DialogEndGame;
     long startTime = System.currentTimeMillis();
+    private boolean exit;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        preferences = getSharedPreferences(ARQUIVO_PREFERENCIA, Context.MODE_PRIVATE);
+
         setContentView(R.layout.activity_game_easy_normal);
         cardsUp = 6;
         DialogEndGame = new Dialog(this);
-
-        Bundle extra = getIntent().getExtras();
-        final String text = extra.getString("som");
 
         checkSoundStatus("inGame");
 
@@ -68,7 +74,7 @@ public class GameActivity extends Activity {
                             boolean1 = flipTheCard(imageValue, ImageView_1, "boolean1");
                         } else {
                             int imageValue = matriz[0][0];
-                            boolean1 = compareCards(imageValue, ImageView_1,text);
+                            boolean1 = compareCards(imageValue, ImageView_1);
                         }
                     }
                 }
@@ -85,7 +91,7 @@ public class GameActivity extends Activity {
                             boolean2 = flipTheCard(imageValue, imageView_2, "boolean2");
                         } else {
                             int imageValue = matriz[0][1];
-                            boolean2 = compareCards(imageValue, imageView_2,text);
+                            boolean2 = compareCards(imageValue, imageView_2);
                         }
                     }
                 }
@@ -102,7 +108,7 @@ public class GameActivity extends Activity {
                             boolean3 = flipTheCard(imageValue, imageView_3, "boolean3");
                         } else {
                             int imageValue = matriz[0][2];
-                            boolean3 = compareCards(imageValue, imageView_3,text);
+                            boolean3 = compareCards(imageValue, imageView_3);
                         }
                     }
                 }
@@ -118,7 +124,7 @@ public class GameActivity extends Activity {
                             boolean4 = flipTheCard(imageValue, imageView_4, "boolean4");
                         } else {
                             int imageValue = matriz[1][0];
-                            boolean4 = compareCards(imageValue, imageView_4,text);
+                            boolean4 = compareCards(imageValue, imageView_4);
                         }
                     }
                 }
@@ -134,7 +140,7 @@ public class GameActivity extends Activity {
                             boolean5 = flipTheCard(imageValue, imageView_5, "boolean5");
                         } else {
                             int imageValue = matriz[1][1];
-                            boolean5 = compareCards(imageValue, imageView_5,text);
+                            boolean5 = compareCards(imageValue, imageView_5);
                         }
                     }
                 }
@@ -150,7 +156,7 @@ public class GameActivity extends Activity {
                             boolean6 = flipTheCard(imageValue, imageView_6, "boolean6");
                         } else {
                             int imageValue = matriz[1][2];
-                            boolean6 = compareCards(imageValue, imageView_6,text);
+                            boolean6 = compareCards(imageValue, imageView_6);
                         }
                     }
                 }
@@ -166,7 +172,7 @@ public class GameActivity extends Activity {
                             boolean7 = flipTheCard(imageValue, imageView_7, "boolean7");
                         } else {
                             int imageValue = matriz[2][0];
-                            boolean7 = compareCards(imageValue, imageView_7,text);
+                            boolean7 = compareCards(imageValue, imageView_7);
                         }
 
                     }
@@ -183,7 +189,7 @@ public class GameActivity extends Activity {
                             boolean8 = flipTheCard(imageValue, imageView_8, "boolean8");
                         } else {
                             int imageValue = matriz[2][1];
-                            boolean8 = compareCards(imageValue, imageView_8,text);
+                            boolean8 = compareCards(imageValue, imageView_8);
                         }
                     }
                 }
@@ -199,7 +205,7 @@ public class GameActivity extends Activity {
                             boolean9 = flipTheCard(imageValue, imageView_9, "boolean9");
                         } else {
                             int imageValue = matriz[2][2];
-                            boolean9 = compareCards(imageValue, imageView_9,text);
+                            boolean9 = compareCards(imageValue, imageView_9);
                         }
                     }
                 }
@@ -215,7 +221,7 @@ public class GameActivity extends Activity {
                             boolean10 = flipTheCard(imageValue, imageView_10, "boolean10");
                         } else {
                             int imageValue = matriz[3][0];
-                            boolean10 = compareCards(imageValue, imageView_10,text);
+                            boolean10 = compareCards(imageValue, imageView_10);
                         }
                     }
                 }
@@ -231,7 +237,7 @@ public class GameActivity extends Activity {
                             boolean11 = flipTheCard(imageValue, imageView_11, "boolean11");
                         } else {
                             int imageValue = matriz[3][1];
-                            boolean11 = compareCards(imageValue, imageView_11,text);
+                            boolean11 = compareCards(imageValue, imageView_11);
                         }
                     }
                 }
@@ -247,7 +253,7 @@ public class GameActivity extends Activity {
                             boolean12 = flipTheCard(imageValue, imageView_12, "boolean12");
                         } else {
                             int imageValue = matriz[3][2];
-                            boolean12 = compareCards(imageValue, imageView_12,text);
+                            boolean12 = compareCards(imageValue, imageView_12);
                         }
                     }
                 }
@@ -355,7 +361,7 @@ public class GameActivity extends Activity {
         image.setImageDrawable(getResources().getDrawable(R.drawable.cardbackground));
     }
 
-    private boolean compareCards(int imageValuePressed, final ImageView imagePressed, String statusMusica) {
+    private boolean compareCards(int imageValuePressed, final ImageView imagePressed) {
 
         playerTries++;
         String triesText = getString(R.string.tries) + ": " + Integer.toString(playerTries);
@@ -364,7 +370,7 @@ public class GameActivity extends Activity {
         if (imageValuePressed == imageValueFlipped) {
             cardsUp--;
             cardsFlipped = 2;
-            playMusic("correct", statusMusica);
+            playCardSound("correct");
             sumPoint();
             flipped = false;
             setImage(imageValuePressed, imagePressed);
@@ -379,7 +385,7 @@ public class GameActivity extends Activity {
             return true;
         } else {
             flipped = false;
-            playMusic("wrong", statusMusica);
+            playCardSound("wrong");
             setImage(imageValuePressed, imagePressed);
             cardsFlipped = 2;
             resetLastBooleanClicked(lastBooleanClicked);
@@ -502,43 +508,41 @@ public class GameActivity extends Activity {
         if (extra != null) {
             if (text.equals("ativado")) {
                 if(typeMusic.equalsIgnoreCase("inGame")){
-                    playMusic("inGame","ativado");
+                    playMusic("inGame");
                 }else{
-                    playMusic("endGame","ativado");
+                    playMusic("endGame");
                 }
             }
         }
     }
 
-    public void playMusic(String typeMusic, String statusMusica) {
+    public void playMusic(String typeMusic) {
 
         switch (typeMusic) {
-
             case "inGame":
                 mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.ingamemusic);
                 mediaPlayer.start();
                 mediaPlayer.setLooping(true);
                 break;
+//          A ARRUMAR
+          case "endGame":
+              mediaPlayer.stop();
+              mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.endgamemusic);
+              mediaPlayer.start();
+              break;
+        }
+    }
 
-            case "endGame":
-                mediaPlayer.stop();
-                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.endgamemusic);
-                mediaPlayer.start();
-                break;
+    public void playCardSound(String soundType) {
 
-            case "wrong":
-                if(statusMusica.equalsIgnoreCase("ativado")){
-                    mediaPlayer2 = MediaPlayer.create(this, R.raw.failedsound);
-                    mediaPlayer2.start();
-                }
-                break;
-
+        switch (soundType) {
             case "correct":
-                if(statusMusica.equalsIgnoreCase("ativado")){
-                    mediaPlayer2 = MediaPlayer.create(this, R.raw.correctsound);
-                    mediaPlayer2.start();
-                }
+                MediaPlayer soundCorrect = MediaPlayer.create(this, R.raw.correctsound);
+                soundCorrect.start();
                 break;
+            case "wrong":
+                MediaPlayer soundWrong = MediaPlayer.create(this, R.raw.failedsound);
+                soundWrong.start();
         }
     }
 
@@ -551,6 +555,7 @@ public class GameActivity extends Activity {
         Button buttonNewGame = DialogEndGame.findViewById(R.id.ButtonNewGameId);
         textViewPointsEndGame = DialogEndGame.findViewById(R.id.textViewPoints);
         textViewTitle = DialogEndGame.findViewById(R.id.textViewTitle);
+        textName = DialogEndGame.findViewById(R.id.EditTextSaveName);
 
         checkSoundStatus("endGame");
 
@@ -563,6 +568,9 @@ public class GameActivity extends Activity {
         buttonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Database database = new Database();
+                database.createDatabase();
+                database.saveToDatabase(textName.getText().toString(), playerScore);;
                 finish();
             }
         });
@@ -570,6 +578,9 @@ public class GameActivity extends Activity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Database database = new Database();
+                database.createDatabase();
+                database.saveToDatabase(textName.getText().toString(), playerScore);
                 DialogEndGame.dismiss();
                 recreate();
             }
@@ -610,30 +621,36 @@ public class GameActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-        Button buttonYes, buttonNo;
+        AlertDialog.Builder dialog;
 
-        DialogEndGame.setContentView(R.layout.exit_popup);
+        dialog = new AlertDialog.Builder(this);
 
-        buttonYes = DialogEndGame.findViewById(R.id.ButtonYesId);
-        buttonNo = DialogEndGame.findViewById(R.id.ButtonNoId);
-
-        DialogEndGame.setCanceledOnTouchOutside(false);
-        DialogEndGame.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-        DialogEndGame.show();
-
-        buttonYes.setOnClickListener(new View.OnClickListener() {
+        dialog.setTitle("Exit");
+        dialog.setMessage("Deseja realmente sair?");
+        dialog.setCancelable(false);
+        dialog.setIcon(android.R.drawable.ic_delete);
+        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exit = false;
+            }
+        });
+        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exit = true;
+                Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
-        buttonNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogEndGame.dismiss();
-            }
-        });
+        dialog.create();
+        dialog.show();
+
+        if(exit) {
+            super.onBackPressed();
+        }
+
     }
 }
 
